@@ -14,19 +14,17 @@ public struct AnimatedImageView<T: SymbolEffect & DiscreteSymbolEffect>: View {
     var action: (() -> Void)? = nil
     var effect: T
     var options: SymbolEffectOptions = .default
-    @Binding var animate: Bool
+    @State var animate: Bool = false
     
     public init(
         inputIcon: Image,
         effect: T,
         options: SymbolEffectOptions = .default,
-        animate: Binding<Bool>,
         action: (() -> Void)? = nil
     ) {
         self.inputIcon = inputIcon
         self.effect = effect
         self.options = options
-        self._animate = animate
         self.action = action
     }
 
