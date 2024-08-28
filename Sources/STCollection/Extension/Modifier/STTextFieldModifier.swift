@@ -8,11 +8,11 @@
 import Foundation
 import SwiftUI
 
-struct STTextFeildModifier: ViewModifier {
+public struct STTextFeildModifier: ViewModifier {
     
     let keyboardType: UIKeyboardType
     
-    func body(content: Content) -> some View {
+    public func body(content: Content) -> some View {
         content
             .textInputAutocapitalization(.never)
             .keyboardType(keyboardType)
@@ -22,7 +22,7 @@ struct STTextFeildModifier: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     
     func fieldSetting(keyboardType: UIKeyboardType = .asciiCapable) -> some View {
         modifier(STTextFeildModifier(keyboardType: keyboardType))
