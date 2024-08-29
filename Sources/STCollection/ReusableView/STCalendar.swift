@@ -84,8 +84,3 @@ public struct STCalendar: View {
 
     }
 }
-
-#Preview() {
-    STCalendar(selectedDate: .constant(Date()))
-        
-}

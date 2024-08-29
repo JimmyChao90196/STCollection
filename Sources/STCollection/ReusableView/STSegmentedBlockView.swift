@@ -166,13 +166,3 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
         selectedIndex == currentIndex
     }
 }
-
-#Preview {
-    
-    let titles = [TabTitle(title: "Yes"), TabTitle(title: "YYYY")]
-    
-    return STSegmentedBlockView(
-        selectedIndex: .constant(0),
-        previousIndex: .constant(0),
-        inputDatas: titles)
-}

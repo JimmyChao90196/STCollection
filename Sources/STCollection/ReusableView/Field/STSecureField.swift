@@ -91,16 +91,3 @@ public struct STSecureField: View {
         }
     }
 }
-
-#Preview {
-
-        @FocusState var focusedField: STTextFieldType?
-        
-        return STSecureField(
-            password: .constant("12345678"),
-            style: .normal,
-            placeholder: "Enter your password",
-            isFieldFocus: $focusedField,
-            fieldType: .password()
-        )
-}

@@ -67,15 +67,3 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
         
     }
 }
-
-
-#Preview {
-    STList(datas: ["A Lala", "B Lala", "C Lala"]) { data in
-        Text(data)
-    } headerView: {
-        Color.clear
-    } footerView: {
-        Text("Followup")
-    }
-
-}

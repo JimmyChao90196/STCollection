@@ -56,12 +56,3 @@ public struct STTextFeild: View {
 
     }
 }
-
-#Preview {
-    
-    let placeholder = "請輸入資料"
-    
-    return STTextFeild(
-        inputData: .constant(""),
-        placeholder: placeholder, style: .block)
-}

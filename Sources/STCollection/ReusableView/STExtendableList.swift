@@ -70,15 +70,3 @@ public struct STExtendableList<InputData, Card: View, Header: View, Footer: View
         
     }
 }
-
-
-#Preview {
-    STExtendableList(datas: ["A Lala", "B Lala", "C Lala"]) { data in
-        Text(data)
-    } headerView: {
-        Color.clear
-    } footerView: {
-        Text("Followup")
-    }
-
-}

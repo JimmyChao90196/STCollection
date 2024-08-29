@@ -117,6 +117,3 @@ public struct STDateField: View {
     }
 }
 
-#Preview {
-    return STDateField(placeholder: "請選擇日期", selectedDate: .constant(Date()))
-}

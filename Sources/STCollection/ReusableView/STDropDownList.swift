@@ -177,18 +177,3 @@ public struct STDropDownList: View {
         .zIndex(1)
     }
 }
-
-#Preview {
-    
-    let options = [ "Google", "Intel", "AMD" ]
-    
-    return STDropDownList(
-        selection: .constant(nil),
-        isDroping: .constant(true),
-        placeholder: "請選擇",
-        options: options,
-        disable: .constant(false)
-    )
-    
-}
-

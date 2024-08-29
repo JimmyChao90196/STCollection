@@ -86,8 +86,3 @@ public struct STChatField: View {
     }
 }
 
-#Preview {
-    return STChatField(
-        placeholder: "請輸入文字",
-        inputText: .constant("")) { _ in }
-}

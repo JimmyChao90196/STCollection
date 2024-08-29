@@ -61,8 +61,3 @@ public struct STChecker: View {
         }
     }
 }
-
-#Preview {
-    STChecker(isChecked: .constant(true))
-}
-

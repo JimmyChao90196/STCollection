@@ -52,20 +52,3 @@ public struct STSlideView<T, ReturnedView: View>: View {
         .background(.clear)
     }
 }
-
-#Preview {
-    
-    let tutorials = [
-        "1", "2", "3"
-    ]
-    
-    return STSlideView(
-        currentIndex: .constant(0),
-        inputDatas: tutorials) { unit in
-            Text(unit)
-                .frame(maxWidth: .infinity)
-                .background(.red)
-    }
-}
-
-

@@ -129,30 +129,3 @@ public struct STTextFieldList: View {
         }
     }
 }
-
-#Preview {
-    
-    let name: Binding<String> = .constant("")
-    let telephone: Binding<String> = .constant("")
-    let address: Binding<String> = .constant("")
-    let contact: Binding<String> = .constant("")
-    let cellphone: Binding<String> = .constant("")
-    let sex: Binding<String> = .constant("")
-    let date: Binding<Date> = .constant(Date.now)
-    let email: Binding<String> = .constant("")
-    
-    // Create an array of tuples containing text field labels and bindings
-    let textFields: [InputFieldType] = [
-        .text(binding: name, type: .name()),
-        .secure(binding: email, type: .email()),
-        .date(binding: date, type: .birthday(), restriction: .disableFuture),
-        .text(binding: sex, type: .sex()),
-        .text(binding: cellphone, type: .cellphone()),
-        .text(binding: address, type: .address()),
-        .text(binding: contact, type: .contact()),
-        .text(binding: telephone, type: .telephone()),
-    ]
-    
-    @FocusState var focusedField: STTextFieldType?
-    return STTextFieldList(isFocusedOn: $focusedField, textFields: textFields, style: .block)
-}

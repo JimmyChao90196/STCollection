@@ -71,9 +71,3 @@ public struct STCodeField: View {
         }
     }
 }
-
-#Preview {
-    let digits = ["","","", ""]
-    return STCodeField(digits: .constant(digits))
-}
-
