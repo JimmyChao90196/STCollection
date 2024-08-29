@@ -6,16 +6,15 @@
 //
 
 import Foundation
-import os
 
-fileprivate let logger = Logger(subsystem: "SmartTools", category: "StringExtension")
+
 
 public extension String {
 
     func masked(firstDigits: Int, lastDigits: Int, with template: String = "*") -> String {
         let totalLength = count
         guard firstDigits + lastDigits < totalLength else {
-            logger.log("Error: The sum of firstDigits and lastDigits must be less than the length of the string.")
+
             return ""
         }
         
@@ -25,7 +24,7 @@ public extension String {
             let range = NSMakeRange(0, totalLength)
             return regex.stringByReplacingMatches(in: self, options: [], range: range, withTemplate: template)
         } catch {
-            logger.log("Error creating regex: \(error.localizedDescription)")
+
             return ""
         }
     }

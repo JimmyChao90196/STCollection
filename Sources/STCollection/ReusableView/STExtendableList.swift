@@ -7,9 +7,6 @@
 
 import Foundation
 import SwiftUI
-import os
-
-fileprivate let logger = Logger(subsystem: "SmartTools", category: "STList")
 
 public struct STExtendableList<InputData, Card: View, Header: View, Footer: View>: View {
     

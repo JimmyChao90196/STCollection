@@ -1,8 +1,5 @@
 
 import SwiftUI
-import os
-
-fileprivate let logger = Logger(subsystem: "SmartTools", category: "STTextFieldList")
 
 public enum InputFieldType: Hashable {
     case text(binding: Binding<String>, type: STTextFieldType)
