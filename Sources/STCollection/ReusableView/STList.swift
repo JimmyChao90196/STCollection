@@ -43,7 +43,6 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
         List {
             headerView
                 .primListRowStyle()
-                .padding(.vertical, 10)
                 .padding(.horizontal, 2)
             
             ForEach(datas.indices, id:\.self) { index in
@@ -55,7 +54,6 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
             
             footerView
                 .primListRowStyle()
-                .padding(.vertical, 10)
                 .padding(.horizontal, 2)
         }
         .environment(\.defaultMinListRowHeight, 0)
