@@ -46,7 +46,7 @@ public enum STTextFieldType: Hashable {
                 .default
         case .id, .healthId, .password, .currentPassword, .newPassword, .confirmPassword, .email:
                 .asciiCapable
-        case .telephone: .numberPad
+        case .telephone, .heartRate, .bloodPressure, .bodyTemp, .bodyHeight, .bodyWeight, .waistCircumference: .numberPad
         default: .asciiCapable
         }
     }
