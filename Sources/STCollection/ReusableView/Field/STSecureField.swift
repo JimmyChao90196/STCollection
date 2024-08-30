@@ -3,6 +3,7 @@ import SwiftUI
 public enum STFieldStyle {
     case normal
     case block
+    case oneLineMode
 }
 
 public struct STSecureField: View {
