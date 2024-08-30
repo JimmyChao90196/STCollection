@@ -12,10 +12,10 @@ import SwiftUI
 public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     
     // Source
-    let datas: [InputData]
-    let cardView: (InputData) -> Card
-    let footerView: Footer
-    let headerView: Header
+    var datas: [InputData]
+    var cardView: (InputData) -> Card
+    var footerView: Footer
+    var headerView: Header
     
     public init(
         datas: [InputData],
