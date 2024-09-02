@@ -23,3 +23,23 @@ public struct STHDivider: View {
             .frame(height: height)
     }
 }
+
+public struct STVDivider: View {
+    
+    let color: Color
+    let width: CGFloat
+    let height: CGFloat
+    
+    public init(color: Color, width: CGFloat, height: CGFloat = 10) {
+        self.color = color
+        self.width = width
+        self.height = height
+    }
+    
+    public var body: some View {
+        Rectangle()
+            .fill(color)
+            .frame(width: width, height: height)
+            .clipShape(.rect(cornerRadius: 5))
+    }
+}
