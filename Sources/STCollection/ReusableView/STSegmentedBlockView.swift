@@ -32,7 +32,7 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
     @Binding var selectedIndex: Int
     @Binding var previousIndex: Int
     //let tabConfig: TabConfigProtocol
-    @State public var inputDatas: [T]
+    public var inputDatas: [T]
     var animationStyle: Animation = .bouncy(duration: 0.5, extraBounce: 0.01)
     var innerPadding: CGFloat = 5
     var innerShadow: Bool = false
@@ -65,7 +65,7 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
     ) {
         self._selectedIndex = selectedIndex
         self._previousIndex = previousIndex
-        self._inputDatas = State(initialValue: inputDatas)
+        self.inputDatas = inputDatas
         self.animationStyle = animationStyle
         self.innerPadding = innerPadding
         self.innerShadow = innerShadow
