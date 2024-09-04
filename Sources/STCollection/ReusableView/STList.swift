@@ -17,24 +17,31 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     var footerView: Footer
     var headerView: Header
     
+    var onDelete: ((IndexSet) -> Void)?
+    
     public init(
         datas: [InputData],
         cardView: @escaping (InputData) -> Card,
         @ViewBuilder headerView: () -> Header,
-        @ViewBuilder footerView: () -> Footer
+        @ViewBuilder footerView: () -> Footer,
+        onDelete: ((IndexSet) -> Void)? = nil
     ) {
         self.datas = datas
         self.cardView = cardView
         self.headerView = headerView()
         self.footerView = footerView()
+        self.onDelete = onDelete
     }
 
-    public init(datas: [InputData],
-         cardView: @escaping (InputData) -> Card) where Footer == Color, Header == Color {
+    public init(
+        datas: [InputData],
+        cardView: @escaping (InputData) -> Card,
+        onDelete: ((IndexSet) -> Void)? = nil) where Footer == Color, Header == Color {
         self.datas = datas
         self.cardView = cardView
         self.footerView = Color.clear
         self.headerView = Color.clear
+        self.onDelete = onDelete
     }
     
     
@@ -51,6 +58,9 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
                 .padding(.vertical, 10)
                 .padding(.horizontal, 2)
             }
+            .onDelete(perform: { indexSet in
+                onDelete?(indexSet)
+            })
             
             footerView
                 .primListRowStyle()
