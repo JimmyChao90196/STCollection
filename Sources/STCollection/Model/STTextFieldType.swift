@@ -18,6 +18,7 @@ public enum STTextFieldType: Hashable {
     case cellphone(title: String = "手機號碼", placeholder: String = "請輸入您的手機號碼")
     case address(title: String = "地址", placeholder: String = "請輸入您的地址")
     case contact(title: String = "聯絡人", placeholder: String = "請輸入聯絡人姓名")
+    case contactPersonPhone(title: String = "聯絡人電話", placeholder: String = "請輸入聯絡人電話")
     case telephone(title: String = "家用電話", placeholder: String = "請輸入家用電話")
     case sex(title: String = "生理性別", placeholder: String = "請輸入您的生理性別")
     case password(title: String = "密碼", placeholder: String = "請輸入您的密碼")
@@ -72,7 +73,9 @@ public enum STTextFieldType: Hashable {
              .bodyTemp(_, let placeholder),
              .bodyHeight(_, let placeholder),
              .bodyWeight(_, let placeholder),
-             .waistCircumference(_, let placeholder):
+             .waistCircumference(_, let placeholder),
+             .contactPersonPhone(_, let placeholder)
+            :
             return placeholder
         }
     }
@@ -98,7 +101,8 @@ public enum STTextFieldType: Hashable {
              .bodyTemp(let title, _),
              .bodyHeight(let title, _),
              .bodyWeight(let title, _),
-             .waistCircumference(let title, _)
+             .waistCircumference(let title, _),
+             .contactPersonPhone(let title, _)
             :
             return title
         }
