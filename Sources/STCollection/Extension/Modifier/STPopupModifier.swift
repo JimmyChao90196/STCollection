@@ -13,10 +13,12 @@ public extension View {
     func popup<PopupView: View & Popable>(
         content: PopupView,
         _ backgroundEnabel: Bool = true,
+        _ materialEnabel: Bool = true,
         backgroundOpacity: CGFloat = 0.5,
         backgroundMaterial: Material = .ultraThinMaterial) -> some View {
             modifier(STGenericPopupModifier(
                 popupContent: content,
+                materialEnable: materialEnabel, 
                 backgroundEnable: backgroundEnabel,
                 backgroundOpacity: backgroundOpacity,
                 backgroundMaterial: backgroundMaterial))
@@ -27,11 +29,13 @@ public struct STGenericPopupModifier<PopupView: View & Popable>: ViewModifier {
     
     let popupContent: PopupView
     let backgroundEnable: Bool
+    let materialEnable: Bool
     var backgroundOpacity: CGFloat
     var backgroundMaterial: Material
     
-    init(popupContent: PopupView, backgroundEnable: Bool, backgroundOpacity: CGFloat, backgroundMaterial: Material) {
+    init(popupContent: PopupView, materialEnable: Bool, backgroundEnable: Bool, backgroundOpacity: CGFloat, backgroundMaterial: Material) {
         self.popupContent = popupContent
+        self.materialEnable = materialEnable
         self.backgroundEnable = backgroundEnable
         self.backgroundOpacity = backgroundOpacity
         self.backgroundMaterial = backgroundMaterial
@@ -45,7 +49,11 @@ public struct STGenericPopupModifier<PopupView: View & Popable>: ViewModifier {
                 if backgroundEnable == true {
                     Color.black.opacity(backgroundOpacity)
                         .edgesIgnoringSafeArea(.all)
-                        .background(backgroundMaterial)
+                        .if(materialEnable, then: { view in
+                            view.background(backgroundMaterial)
+                        }, else: { view in
+                            view
+                        })
                         .zIndex(10)
                         .frame(maxWidth: .infinity, maxHeight: .infinity)}
                 
