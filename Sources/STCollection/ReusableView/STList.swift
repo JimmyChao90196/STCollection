@@ -13,6 +13,7 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     
     // Source
     var datas: [InputData]
+    var initPadding: CGFloat = 16
     var cardView: (InputData) -> Card
     var footerView: Footer
     var headerView: Header
@@ -69,7 +70,7 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
         .scrollIndicators(.hidden)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, initPadding)
         
     }
 }
