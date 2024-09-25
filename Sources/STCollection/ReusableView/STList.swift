@@ -13,7 +13,7 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     
     // Source
     var datas: [InputData]
-    var initPadding: CGFloat = 16
+    var initPadding: CGFloat
     var cardView: (InputData) -> Card
     var footerView: Footer
     var headerView: Header
@@ -22,12 +22,14 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     
     public init(
         datas: [InputData],
+        initPadding: CGFloat = 16,
         cardView: @escaping (InputData) -> Card,
         @ViewBuilder headerView: () -> Header,
         @ViewBuilder footerView: () -> Footer,
         onDelete: ((IndexSet) -> Void)? = nil
     ) {
         self.datas = datas
+        self.initPadding = initPadding
         self.cardView = cardView
         self.headerView = headerView()
         self.footerView = footerView()
@@ -36,9 +38,11 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
 
     public init(
         datas: [InputData],
+        initPadding: CGFloat = 16,
         cardView: @escaping (InputData) -> Card,
         onDelete: ((IndexSet) -> Void)? = nil) where Footer == Color, Header == Color {
         self.datas = datas
+        self.initPadding = initPadding
         self.cardView = cardView
         self.footerView = Color.clear
         self.headerView = Color.clear
