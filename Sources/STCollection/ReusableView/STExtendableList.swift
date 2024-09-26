@@ -69,7 +69,7 @@ public struct STExtendableList<InputData, Card: View, Header: View, Footer: View
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
         .scrollIndicators(.hidden)
-        .padding(.horizontal, 16)
+        .padding(.horizontal, initPadding)
         
     }
 }
