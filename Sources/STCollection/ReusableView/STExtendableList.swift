@@ -41,7 +41,7 @@ public struct STExtendableList<InputData, Card: View, Header: View, Footer: View
         
         ScrollView {
             
-            VStack(spacing: 0) {
+            LazyVStack(spacing: 0) {
                 headerView
                     .primListRowStyle()
                     //.padding(.vertical, 10)
