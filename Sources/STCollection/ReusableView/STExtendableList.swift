@@ -12,25 +12,31 @@ public struct STExtendableList<InputData, Card: View, Header: View, Footer: View
     
     // Source
     let datas: [InputData]
+    var initPadding: CGFloat
     let cardView: (InputData) -> Card
     let footerView: Footer
     let headerView: Header
     
     public init(
         datas: [InputData],
+        initPadding: CGFloat = 16,
         cardView: @escaping (InputData) -> Card,
         @ViewBuilder headerView: () -> Header,
         @ViewBuilder footerView: () -> Footer
     ) {
         self.datas = datas
+        self.initPadding = initPadding
         self.cardView = cardView
         self.headerView = headerView()
         self.footerView = footerView()
     }
 
-    public init(datas: [InputData],
-         cardView: @escaping (InputData) -> Card) where Footer == Color, Header == Color {
-        self.datas = datas
+    public init(
+        datas: [InputData],
+        initPadding: CGFloat = 16,
+        cardView: @escaping (InputData) -> Card) where Footer == Color, Header == Color {
+        self.datas = datas    
+        self.initPadding = initPadding
         self.cardView = cardView
         self.footerView = Color.clear
         self.headerView = Color.clear
