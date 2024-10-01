@@ -83,7 +83,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     style: style)
                 .fieldSetting(keyboardType: textFieldType.keyboardType)
                 .focused($isFocusedOn, equals: textFieldType)
-                .padding(.bottom, 8)
+                //.padding(.bottom, 8)
                 .onTapGesture {}
                 .onSubmit {
                     submitAction(index: index)
@@ -98,7 +98,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     style: style,
                     dateRestriction: restriction)
                 .onTapGesture {}
-                .padding(.bottom, 8)
+                //.padding(.bottom, 8)
             }
         }
     }
