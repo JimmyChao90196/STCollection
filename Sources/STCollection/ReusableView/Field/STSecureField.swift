@@ -13,6 +13,7 @@ public struct STSecureField: View {
     let placeholder: String
     
     @State var isShowingPassword: Bool = false
+    @State var isShowIcon: Bool = false
     @FocusState.Binding var isFieldFocus: STTextFieldType?
     let fieldType: STTextFieldType
     
@@ -21,20 +22,22 @@ public struct STSecureField: View {
         style: STFieldStyle = .normal,
         placeholder: String,
         isShowingPassword: Bool = false,
+        isShowIcon: Bool = true,
         isFieldFocus: FocusState<STTextFieldType?>.Binding,
         fieldType: STTextFieldType) {
-        self._password = password
-        self.style = style
-        self.placeholder = placeholder
-        self.isShowingPassword = isShowingPassword
-        self._isFieldFocus = isFieldFocus
-        self.fieldType = fieldType
-    }
+            self._password = password
+            self.style = style
+            self.placeholder = placeholder
+            self.isShowingPassword = isShowingPassword
+            self.isShowIcon = isShowIcon
+            self._isFieldFocus = isFieldFocus
+            self.fieldType = fieldType
+        }
     
     public var body: some View {
         HStack {
             
-            if fieldType.icon != nil {
+            if fieldType.icon != nil && isShowIcon {
                 fieldType.icon
             }
             
