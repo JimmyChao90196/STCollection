@@ -3,7 +3,7 @@ import SwiftUI
 public enum STFieldStyle {
     case normal
     case block
-    case oneLineMode
+    case original
 }
 
 public struct STSecureField: View {
@@ -72,7 +72,22 @@ public struct STSecureField: View {
             .foregroundStyle(.ST_1B0851)
             .padding(.trailing)
         }
-        .if(style == .normal) { view in
+//        .if(style == .normal) { view in
+//            view
+//                .padding(.horizontal, 5)
+//                .innerShadow(.white, 5)
+//                .overlay {
+//                    RoundedRectangle(cornerRadius: 5)
+//                        .stroke(Color.black.opacity(0.25), lineWidth: 1)
+//                }
+//        } else: { view in
+//            view
+//                .padding(.horizontal, 10)
+//                .padding(.vertical)
+//                .bubbleStyle(.ST_CBD8E8, 20)
+//        }
+        
+        .doubleIf(style == .normal, style == .original, then: { view in
             view
                 .padding(.horizontal, 5)
                 .innerShadow(.white, 5)
@@ -80,12 +95,15 @@ public struct STSecureField: View {
                     RoundedRectangle(cornerRadius: 5)
                         .stroke(Color.black.opacity(0.25), lineWidth: 1)
                 }
-        } else: { view in
+        }, elseIf: { view in
+            view
+        }, else: { view in
             view
                 .padding(.horizontal, 10)
                 .padding(.vertical)
                 .bubbleStyle(.ST_CBD8E8, 20)
-        }
+        })
+        
         .padding(.horizontal, 1)
         .onDisappear {
             isFieldFocus = nil
