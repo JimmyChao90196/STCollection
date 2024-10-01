@@ -21,6 +21,7 @@ public enum STTextFieldType: Hashable {
     case contactPersonPhone(title: String = "聯絡人電話", placeholder: String = "請輸入聯絡人電話")
     case telephone(title: String = "家用電話", placeholder: String = "請輸入家用電話")
     case sex(title: String = "生理性別", placeholder: String = "請輸入您的生理性別")
+    case accountName(title: String = "帳號", placeholder: String = "請輸入您的帳號")
     case password(title: String = "密碼", placeholder: String = "請輸入您的密碼")
     case currentPassword(title: String = "目前密碼", placeholder: String = "請輸入您目前的密碼")
     case newPassword(title: String = "新密碼", placeholder: String = "請輸入您的新密碼")
@@ -45,7 +46,7 @@ public enum STTextFieldType: Hashable {
         switch self {
         case .name, .birthday, .address, .contact, .sex:
                 .default
-        case .id, .healthId, .password, .currentPassword, .newPassword, .confirmPassword, .email:
+        case .id, .healthId, .accountName, .password, .currentPassword, .newPassword, .confirmPassword, .email:
                 .asciiCapable
         case .telephone, .heartRate, .bloodPressure, .bodyTemp, .bodyHeight, .bodyWeight, .waistCircumference: .numberPad
         default: .asciiCapable
@@ -64,6 +65,7 @@ public enum STTextFieldType: Hashable {
              .contact(_, let placeholder),
              .telephone(_, let placeholder),
              .sex(_, let placeholder),
+             .accountName(_, let placeholder),
              .password(_, let placeholder),
              .currentPassword(_, let placeholder),
              .newPassword(_, let placeholder),
@@ -92,6 +94,7 @@ public enum STTextFieldType: Hashable {
              .contact(let title, _),
              .telephone(let title, _),
              .sex(let title, _),
+             .accountName(let title, _),
              .password(let title, _),
              .currentPassword(let title, _),
              .newPassword(let title, _),
