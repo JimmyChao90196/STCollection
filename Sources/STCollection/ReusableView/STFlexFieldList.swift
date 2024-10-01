@@ -67,6 +67,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     password: binding,
                     style: style,
                     placeholder: textFieldType.placeholder,
+                    isShowIcon: false,
                     isFieldFocus: $isFocusedOn,
                     fieldType: textFieldType)
                 .fieldSetting(keyboardType: .asciiCapable)
