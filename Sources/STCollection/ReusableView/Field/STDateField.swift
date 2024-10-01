@@ -70,19 +70,6 @@ public struct STDateField: View {
                     .padding(.trailing, 8)
                     .frame(maxWidth: 35, alignment: .trailing)
             }
-//            .if(style == .normal) { view in
-//                view
-//                    .innerShadow(.white, 5)
-//                    .overlay {
-//                        RoundedRectangle(cornerRadius: 5)
-//                            .stroke(Color.black.opacity(0.25), lineWidth: 1)
-//                    }
-//            } else: { view in
-//                view
-//                    .padding(.horizontal, 10)
-//                    .padding(.vertical)
-//                    .bubbleStyle(.ST_CBD8E8, 20)
-//            }
             .doubleIf(style == .normal, style == .original, then: { view in
                 view
                     .padding(.horizontal, 5)
