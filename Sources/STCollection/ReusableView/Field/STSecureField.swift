@@ -14,8 +14,8 @@ public struct STSecureField: View {
     
     @State var isShowingPassword: Bool = false
     @State var isShowIcon: Bool = false
-    @FocusState.Binding var isFieldFocus: STTextFieldType?
-    let fieldType: STTextFieldType
+    @FocusState.Binding var isFieldFocus: CustomTextFieldType?
+    let fieldType: CustomTextFieldType
     
     public init(
         password: Binding<String>,
@@ -23,8 +23,8 @@ public struct STSecureField: View {
         placeholder: String,
         isShowingPassword: Bool = false,
         isShowIcon: Bool = true,
-        isFieldFocus: FocusState<STTextFieldType?>.Binding,
-        fieldType: STTextFieldType) {
+        isFieldFocus: FocusState<CustomTextFieldType?>.Binding,
+        fieldType: CustomTextFieldType) {
             self._password = password
             self.style = style
             self.placeholder = placeholder
