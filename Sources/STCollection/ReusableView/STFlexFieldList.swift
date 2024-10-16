@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct STFlexFieldList<ReturnedView: View>: View {
     
-    @FocusState.Binding public var isFocusedOn: CustomTextFieldType?
+    @FocusState.Binding public var isFocusedOn: STTextFieldType?
     var textFields: [InputFieldType]
     var foregroundColor: Color = .ST_595757
     var style: STFieldStyle = .normal
@@ -10,17 +10,17 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     var titleSpacing: CGFloat = 5
     var titleColor: Color = .ST_1B0851
     
-    var returnedTextField: (AnyView, CustomTextFieldType) -> ReturnedView
+    var returnedTextField: (AnyView, STTextFieldType) -> ReturnedView
     
     public init(
-        isFocusedOn: FocusState<CustomTextFieldType?>.Binding,
+        isFocusedOn: FocusState<STTextFieldType?>.Binding,
         textFields: [InputFieldType],
         foregroundColor: Color = .ST_595757,
         style: STFieldStyle = .normal,
         spacing: CGFloat = 10,
         titleSpacing: CGFloat = 5,
         titleColor: Color = .ST_1B0851,
-        returnedTextField: @escaping (AnyView, CustomTextFieldType) -> ReturnedView
+        returnedTextField: @escaping (AnyView, STTextFieldType) -> ReturnedView
     ) {
         _isFocusedOn = isFocusedOn
         self.textFields = textFields
@@ -44,7 +44,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     }
     
     // Find textfield type
-    private func findField(for element: InputFieldType) -> CustomTextFieldType {
+    private func findField(for element: InputFieldType) -> STTextFieldType {
             switch element {
             case .secure(_, let textFieldType):
                 return textFieldType
