@@ -23,7 +23,7 @@ public extension TitleProtocol {
     }
     var nonSelectedIcon: Image? {
         get { nil }
-        set {}
+        set {} 
     }
 }
 
