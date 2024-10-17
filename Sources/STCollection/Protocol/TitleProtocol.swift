@@ -16,12 +16,12 @@ public protocol TitleProtocol: Identifiable {
     
 }
 
-extension TitleProtocol {
-    var selectedIcon: Image? {
+public extension TitleProtocol {
+    public var selectedIcon: Image? {
         get { nil }
         set {}
     }
-    var nonSelectedIcon: Image? {
+    public var nonSelectedIcon: Image? {
         get { nil }
         set {}
     }

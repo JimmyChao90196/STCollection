@@ -8,7 +8,8 @@
 import Foundation
 import SwiftUI
 
-@available(*, deprecated, message: "The popup extension method will not be supported in the future update.", renamed: "stAlert")
+//@available(*, deprecated, message: "The popup extension method will not be supported in the future update.", renamed: "stAlert")
+
 public extension View {
     func popup<PopupView: View & Popable>(
         content: PopupView,
@@ -34,7 +35,8 @@ public extension View {
 
 
 
-@available(*, deprecated, message: "The popup modifier will not be supported in the future update.", renamed: "AlertModifier")
+//@available(*, deprecated, message: "The popup modifier will not be supported in the future update.", renamed: "AlertModifier")
+
 public struct STGenericPopupModifier<PopupView: View & Popable>: ViewModifier {
     
     let popupContent: PopupView
