@@ -11,8 +11,8 @@ import SwiftUI
 public protocol TitleProtocol: Identifiable {
     var title: String { get }
     var id: UUID { get }
-    var selectedIcon: Image? { get set }
-    var nonSelectedIcon: Image? { get set }
+//    var selectedIcon: Image? { get set }
+//    var nonSelectedIcon: Image? { get set }
     
 }
 

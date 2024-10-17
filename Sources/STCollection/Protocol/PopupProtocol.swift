@@ -11,3 +11,4 @@ import SwiftUI
 public protocol Popable {
     var isShow: Bool { get set }
 }
+
