@@ -17,11 +17,11 @@ public protocol TitleProtocol: Identifiable {
 }
 
 public extension TitleProtocol {
-    public var selectedIcon: Image? {
+    var selectedIcon: Image? {
         get { nil }
         set {}
     }
-    public var nonSelectedIcon: Image? {
+    var nonSelectedIcon: Image? {
         get { nil }
         set {}
     }
