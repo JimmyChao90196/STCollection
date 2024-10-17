@@ -10,6 +10,8 @@ import Foundation
 
 struct STTitleModifier: ViewModifier {
     
+    
+    
     let font: Font
     let fontWeight: Font.Weight
     let color: Color
