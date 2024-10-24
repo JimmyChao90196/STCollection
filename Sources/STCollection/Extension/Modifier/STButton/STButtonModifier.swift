@@ -31,7 +31,7 @@ public struct STButtonModifier: ViewModifier {
             .padding(.horizontal, 5)
             .frame(maxWidth: .infinity)
             .bubbleStyle(backgroundColor, cornerRadius)
-            .foregroundStyle(!isDisable ? foregroundColor: .gray.opacity(0.5))
+            .foregroundStyle(isDisable ? foregroundColor: .gray.opacity(0.5))
             .shadow(color: .black.opacity(0.35), radius: 2, x: 0, y: 4)
             .overlay {
                 RoundedRectangle(cornerRadius: cornerRadius).stroke(strokeColor, lineWidth: 1.25)
@@ -43,7 +43,7 @@ public struct STButtonModifier: ViewModifier {
 }
 
 
-@available(*, deprecated, message: "The stButton modifier will change to private level in the future update.", renamed: "STButton")
+@available(*, deprecated, message: "The stButton modifier will change to private level in the future update.", renamed: "STButtonStyle")
 public extension View {
     func stButton(
         validation: Bool,
