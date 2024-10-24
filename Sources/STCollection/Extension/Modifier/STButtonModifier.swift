@@ -5,12 +5,13 @@
 //  Created by JimmyChao on 2024/8/1.
 //
 
+
 import Foundation
 import SwiftUI
 
 public struct STButtonModifier: ViewModifier {
     
-    var validate: Bool
+    var isDisable: Bool
     let vPadding: CGFloat
     let cornerRadius: CGFloat
     let foregroundColor: Color
@@ -30,21 +31,19 @@ public struct STButtonModifier: ViewModifier {
             .padding(.horizontal, 5)
             .frame(maxWidth: .infinity)
             .bubbleStyle(backgroundColor, cornerRadius)
-            .foregroundStyle(validate ? foregroundColor: .gray.opacity(0.5))
+            .foregroundStyle(!isDisable ? foregroundColor: .gray.opacity(0.5))
             .shadow(color: .black.opacity(0.35), radius: 2, x: 0, y: 4)
             .overlay {
                 RoundedRectangle(cornerRadius: cornerRadius).stroke(strokeColor, lineWidth: 1.25)
             }
             .padding(.horizontal, 1.25)
             .onTapGesture {}
-            .disabled(validate)
-            
-        
+            .disabled(isDisable)
     }
 }
 
 public extension View {
-    func STButton(
+    func stButton(
         validation: Bool,
         vPadding: CGFloat = 15,
         cornerRadius: CGFloat = 7,
@@ -56,7 +55,7 @@ public extension View {
         dynamicSize: PartialRangeThrough<DynamicTypeSize> = ...DynamicTypeSize.xxxLarge
     ) -> some View {
         modifier(STButtonModifier(
-            validate: validation,
+            isDisable: validation,
             vPadding: vPadding,
             cornerRadius: cornerRadius,
             foregroundColor: foregroundColor,
