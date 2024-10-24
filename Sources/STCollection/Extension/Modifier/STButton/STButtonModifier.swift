@@ -42,6 +42,8 @@ public struct STButtonModifier: ViewModifier {
     }
 }
 
+
+@available(*, deprecated, message: "The stButton modifier will change to private level in the future update.", renamed: "STButton")
 public extension View {
     func stButton(
         validation: Bool,
