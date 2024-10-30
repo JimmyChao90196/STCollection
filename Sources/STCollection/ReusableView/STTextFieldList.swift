@@ -78,7 +78,9 @@ public struct STTextFieldList: View {
                         STTextFeild(
                             inputData: binding,
                             placeholder: textFieldType.placeholder,
-                            foregroundColor: foregroundColor, style: style)
+                            foregroundColor: foregroundColor,
+                            style: style,
+                            fieldType: textFieldType)
                         .fieldSetting(keyboardType: textFieldType.keyboardType)
                         .focused($isFocusedOn, equals: textFieldType)
                         .padding(.bottom, 8)

@@ -80,7 +80,9 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     inputData: binding,
                     placeholder: textFieldType.placeholder,
                     foregroundColor: foregroundColor,
-                    style: style)
+                    style: style,
+                    fieldType: textFieldType
+                )
                 .fieldSetting(keyboardType: textFieldType.keyboardType)
                 .focused($isFocusedOn, equals: textFieldType)
                 //.padding(.bottom, 8)
