@@ -25,12 +25,16 @@ public extension View {
     func placeholder(
         _ text: String,
         when shouldShow: Bool,
-        alignment: Alignment = .leading) -> some View {
+        alignment: Alignment = .leading,
+        color: Color = .ST_595757,
+        font: Font = .callout,
+        fontWeight: Font.Weight = .bold
+    ) -> some View {
             
             placeholder(when: shouldShow, alignment: alignment) {
                 Text(text)
-                    .foregroundColor(.ST_595757)
-                    .fontWeight(.bold)
+                    .foregroundColor(color)
+                    .fontWeight(fontWeight)
             }
     }
 }
