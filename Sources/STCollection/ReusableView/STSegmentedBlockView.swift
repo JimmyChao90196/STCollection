@@ -43,6 +43,8 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
     var selectedBgColor: Color = .ST_706D77
     var selectedColor: Color = .white
     var nonSelectedColor: Color = .black
+    var selectedFontWeight: Font.Weight = .bold
+    var nonSelectedFontWeight: Font.Weight = .bold
     var font: Font = .headline
     var dynamicSizeLock: PartialRangeThrough<DynamicTypeSize> = ...DynamicTypeSize.accessibility1
     
@@ -61,6 +63,8 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
         selectedColor: Color = .white,
         nonSelectedColor: Color = .black,
         font: Font = .headline,
+        selectedFontWeight: Font.Weight = .bold,
+        nonSelectedFontWeight: Font.Weight = .bold,
         dynamicSizeLock: PartialRangeThrough<DynamicTypeSize> = ...DynamicTypeSize.accessibility1
     ) {
         self._selectedIndex = selectedIndex
@@ -77,6 +81,8 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
         self.selectedColor = selectedColor
         self.nonSelectedColor = nonSelectedColor
         self.font = font
+        self.selectedFontWeight = selectedFontWeight
+        self.nonSelectedFontWeight = nonSelectedFontWeight
         self.dynamicSizeLock = dynamicSizeLock
     }
     
@@ -112,11 +118,11 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
                             // Tab title
                             Text(inputDatas[index].title)
                                 .customDynamicSize(font: font, dynamicSizeLock)
-                                .fontWeight(.bold)
+                                .fontWeight(isSelected(index) ?
+                                            selectedFontWeight: nonSelectedFontWeight)
                                 .foregroundStyle(
                                     isSelected(index) ?
-                                    selectedColor: nonSelectedColor
-                                )
+                                    selectedColor: nonSelectedColor)
                                 .lineLimit(1)
                                 .multilineTextAlignment(.center)
                                 .minimumScaleFactor(0.2)
