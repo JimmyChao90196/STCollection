@@ -46,6 +46,8 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
     var selectedFontWeight: Font.Weight = .bold
     var nonSelectedFontWeight: Font.Weight = .bold
     var font: Font = .headline
+    var frameColor: Color = .gray.opacity(0.5)
+    var frameWidth: CGFloat = 1
     var dynamicSizeLock: PartialRangeThrough<DynamicTypeSize> = ...DynamicTypeSize.accessibility1
     
     public init(
@@ -65,6 +67,8 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
         font: Font = .headline,
         selectedFontWeight: Font.Weight = .bold,
         nonSelectedFontWeight: Font.Weight = .bold,
+        frameColor: Color = .gray.opacity(0.5),
+        frameWidth: CGFloat = 1,
         dynamicSizeLock: PartialRangeThrough<DynamicTypeSize> = ...DynamicTypeSize.accessibility1
     ) {
         self._selectedIndex = selectedIndex
@@ -83,6 +87,8 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
         self.font = font
         self.selectedFontWeight = selectedFontWeight
         self.nonSelectedFontWeight = nonSelectedFontWeight
+        self.frameColor = frameColor
+        self.frameWidth = frameWidth
         self.dynamicSizeLock = dynamicSizeLock
     }
     
@@ -154,14 +160,14 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
             .if(innerShadow, then: { view in
                 view.innerShadow(nonSelectedBgColor, radius)
                     .overlay {
-                        RoundedRectangle(cornerRadius: radius).stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                        RoundedRectangle(cornerRadius: radius).stroke(frameColor, lineWidth: frameWidth)
                     }
             }, else: { view in
                 view
                     .background(nonSelectedBgColor)
                     .clipShape(.rect(cornerRadius: radius))
                     .overlay {
-                        RoundedRectangle(cornerRadius: radius).stroke(Color.gray.opacity(0.5), lineWidth: 2)
+                        RoundedRectangle(cornerRadius: radius).stroke(frameColor, lineWidth: frameWidth)
                     }
             })
         }
