@@ -63,8 +63,12 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
                 .padding(.vertical, 10)
                 .padding(.horizontal, 2)
             }
-            .onDelete(perform: { indexSet in
-                onDelete?(indexSet)
+            .if(onDelete != nil, then: { view in
+                view.onDelete(perform: { indexSet in
+                        onDelete?(indexSet)
+                    })
+            }, else: { view in
+                view
             })
             
             footerView
