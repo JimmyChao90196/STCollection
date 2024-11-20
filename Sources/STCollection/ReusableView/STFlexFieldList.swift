@@ -46,11 +46,11 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     // Find textfield type
     private func findField(for element: InputFieldType) -> STTextFieldType {
             switch element {
-            case .secure(_, let textFieldType):
+            case .secure(_, let textFieldType, _):
                 return textFieldType
-            case .text(_, let textFieldType):
+            case .text(_, let textFieldType, _):
                 return textFieldType
-            case .date(_, let textFieldType, _):
+            case .date(_, let textFieldType, _, _):
                 return textFieldType
             }
     }
@@ -61,7 +61,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         VStack(alignment: .leading, spacing: titleSpacing) {
             switch element {
                 
-            case .secure(let binding, let textFieldType):
+            case .secure(let binding, let textFieldType, _):
                 
                 STSecureField(
                     password: binding,
@@ -74,7 +74,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                 .onSubmit { submitAction(index: index) }
                 .onTapGesture {}
                 
-            case .text(let binding, let textFieldType):
+            case .text(let binding, let textFieldType, _):
                 
                 STTextFeild(
                     inputData: binding,
@@ -91,7 +91,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     submitAction(index: index)
                 }
                 
-            case .date(let binding, let textFieldType, let restriction):
+            case .date(let binding, let textFieldType, let restriction, _):
 
                 STDateField(
                     placeholder: textFieldType.placeholder,
@@ -111,11 +111,11 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         let nextIndex = index + 1
         if nextIndex < textFields.count {
             switch textFields[nextIndex] {
-            case .text(_, let nextType):
+            case .text(_, let nextType, _):
                 isFocusedOn = nextType
-            case .date(_, let nextType, _):
+            case .date(_, let nextType, _, _):
                 isFocusedOn = nextType
-            case .secure(_, let nextType):
+            case .secure(_, let nextType, _):
                 isFocusedOn = nextType
             }
         } else {

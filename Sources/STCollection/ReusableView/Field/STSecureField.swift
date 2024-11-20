@@ -98,3 +98,14 @@ public struct STSecureField: View {
         }
     }
 }
+
+#Preview {
+    
+    @FocusState var isFocusedOn: STTextFieldType?
+    
+    STSecureField(
+        password: .constant(""), style: .block,
+        placeholder: "asdfasd",
+        isFieldFocus: $isFocusedOn,
+        fieldType: TextFieldTypeRegistry.password)
+}
