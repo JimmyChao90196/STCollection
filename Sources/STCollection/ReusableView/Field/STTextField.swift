@@ -12,6 +12,7 @@ import SwiftUI
 public struct STTextFeild: View {
     
     @Binding var inputData: String
+    @State var isShowIcon: Bool = false
     var placeholder: String
 
     var foregroundColor: Color = Color.ST_595757
@@ -21,12 +22,14 @@ public struct STTextFeild: View {
     public init(
             inputData: Binding<String>,
             placeholder: String,
+            isShowIcon: Bool = true,
             foregroundColor: Color = Color.ST_595757,
             style: STFieldStyle = .normal,
             fieldType: STTextFieldType
     ) {
         self._inputData = inputData
         self.placeholder = placeholder
+        self.isShowIcon = isShowIcon
         self.foregroundColor = foregroundColor
         self.style = style
         self.fieldType = fieldType
@@ -36,7 +39,7 @@ public struct STTextFeild: View {
         
         HStack {
             
-            if fieldType.icon != nil {
+            if fieldType.icon != nil && style != .original && isShowIcon {
                 fieldType.icon
             }
             

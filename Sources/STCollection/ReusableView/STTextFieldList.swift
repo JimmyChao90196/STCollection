@@ -2,35 +2,28 @@
 import SwiftUI
 
 public enum InputFieldType: Hashable {
-    case text(binding: Binding<String>,
-              type: STTextFieldType,
-              errorMessage: Binding<String?> = .constant(nil))
-    case date(binding: Binding<Date>,
-              type: STTextFieldType,
-              restriction: DateRestriction,
-              errorMessage: Binding<String?> = .constant(nil))
-    case secure(binding: Binding<String>,
-                type: STTextFieldType,
-                errorMessage: Binding<String?> = .constant(nil))
+    case text(binding: Binding<String>, type: STTextFieldType)
+    case date(binding: Binding<Date>, type: STTextFieldType, restriction: DateRestriction)
+    case secure(binding: Binding<String>, type: STTextFieldType)
     
     public func hash(into hasher: inout Hasher) {
         switch self {
-        case .text(_, let type, _):
+        case .text(_, let type):
             hasher.combine(type.title)
-        case .date(_, let type, _, _):
+        case .date(_, let type, _):
             hasher.combine(type.title)
-        case .secure(_, let type, _):
+        case .secure(_, let type):
             hasher.combine(type.title)
         }
     }
     
     public static func == (lhs: InputFieldType, rhs: InputFieldType) -> Bool {
         switch (lhs, rhs) {
-        case (.text(_, let lhsType, _), .text(_, let rhsType, _)):
+        case (.text(_, let lhsType), .text(_, let rhsType)):
             return lhsType.title == rhsType.title
-        case (.date(_, let lhsType, _, _), .date(_, let rhsType, _, _)):
+        case (.date(_, let lhsType, _), .date(_, let rhsType, _)):
             return lhsType.title == rhsType.title
-        case (.secure(_, let lhsType, _), .secure(_, let rhsType, _)):
+        case (.secure(_, let lhsType), .secure(_, let rhsType)):
             return lhsType.title == rhsType.title
         default:
             return false
@@ -47,10 +40,12 @@ public struct STTextFieldList: View {
     var spacing: CGFloat = 10
     var titleSpacing: CGFloat = 5
     var titleColor: Color = .ST_1B0851
+    var isShowIcon: Bool = true
     
     public init(isFocusedOn: FocusState<STTextFieldType?>.Binding,
                 textFields: [InputFieldType],
                 foregroundColor: Color = .ST_595757,
+                isShowIcon: Bool = true,
                 style: STFieldStyle = .normal,
                 spacing: CGFloat = 10,
                 titleSpacing: CGFloat = 5,
@@ -58,6 +53,7 @@ public struct STTextFieldList: View {
         _isFocusedOn = isFocusedOn
         self.textFields = textFields
         self.foregroundColor = foregroundColor
+        self.isShowIcon = isShowIcon
         self.style = style
         self.spacing = spacing
         self.titleSpacing = titleSpacing
@@ -69,34 +65,28 @@ public struct STTextFieldList: View {
             ForEach(Array(textFields.enumerated()), id: \.offset) { index, element in
                 VStack(alignment: .leading, spacing: titleSpacing) {
                     switch element {
-                    case .secure(let binding, let textFieldType, let errorMessage):
-//                        HStack{
-//                            Text(textFieldType.title).titleConfig(textColor: titleColor)
-//                        }
-                        fieldTitleMaker(textFieldType, errorMessage)
+                    case .secure(let binding, let textFieldType):
+
+                        fieldTitleMaker(textFieldType)
                         
                         STSecureField(
                             password: binding,
                             style: style,
                             placeholder: textFieldType.placeholder,
+                            isShowIcon: self.isShowIcon,
                             isFieldFocus: $isFocusedOn,
                             fieldType: textFieldType)
                         .fieldSetting(keyboardType: textFieldType.keyboardType)
                         .onSubmit { submitAction(index: index) }
                     
-                    case .text(let binding, let textFieldType, let errorMessage):
-//                        HStack{
-//                            Text(textFieldType.title).titleConfig(textColor: titleColor)
-//                            if errorMessage?.wrappedValue != nil {
-//                                Text(errorMessage!.wrappedValue)
-//                                    .customDynamicSize(font: .footnote, ...DynamicTypeSize.xxLarge)
-//                            }
-//                        }
-                        fieldTitleMaker(textFieldType, errorMessage)
+                    case .text(let binding, let textFieldType):
+
+                        fieldTitleMaker(textFieldType)
                         
                         STTextFeild(
                             inputData: binding,
                             placeholder: textFieldType.placeholder,
+                            isShowIcon: self.isShowIcon,
                             foregroundColor: foregroundColor,
                             style: style,
                             fieldType: textFieldType)
@@ -105,11 +95,9 @@ public struct STTextFieldList: View {
                         .padding(.bottom, 8)
                         .onSubmit { submitAction(index: index) }
                     
-                    case .date(let binding, let textFieldType, let restriction, let errorMessage):
-//                        HStack{
-//                            Text(textFieldType.title).titleConfig(textColor: titleColor)
-//                        }
-                        fieldTitleMaker(textFieldType, errorMessage)
+                    case .date(let binding, let textFieldType, let restriction):
+
+                        fieldTitleMaker(textFieldType)
                         
                         STDateField(
                             placeholder: textFieldType.placeholder,
@@ -125,15 +113,10 @@ public struct STTextFieldList: View {
     }
     
     // MARK: Helper function -
-    func fieldTitleMaker(_ input: STTextFieldType, _ errorMessage: Binding<String?>) -> some View {
-        HStack{
-            Text(input.title).titleConfig(textColor: titleColor)
-            
-            if errorMessage.wrappedValue != nil {
-                Text(errorMessage.wrappedValue!)
-                    .customDynamicSize(font: .footnote, ...DynamicTypeSize.xxLarge)
-            }
-        }
+    func fieldTitleMaker(_ input: STTextFieldType) -> some View {
+        
+        Text(input.title).titleConfig(textColor: titleColor)
+    
     }
     
     // Switch focus to the next text field based on the current index
@@ -141,11 +124,11 @@ public struct STTextFieldList: View {
         let nextIndex = index + 1
         if nextIndex < textFields.count {
             switch textFields[nextIndex] {
-            case .text(_, let nextType, _):
+            case .text(_, let nextType):
                 isFocusedOn = nextType
-            case .date(_, let nextType, _, _):
+            case .date(_, let nextType, _):
                 isFocusedOn = nextType
-            case .secure(_, let nextType, _):
+            case .secure(_, let nextType):
                 isFocusedOn = nextType
             }
         } else {

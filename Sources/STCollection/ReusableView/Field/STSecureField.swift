@@ -37,7 +37,7 @@ public struct STSecureField: View {
     public var body: some View {
         HStack {
             
-            if fieldType.icon != nil && isShowIcon {
+            if fieldType.icon != nil && style != .original && isShowIcon {
                 fieldType.icon
             }
             

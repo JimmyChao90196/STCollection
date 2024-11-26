@@ -5,6 +5,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     @FocusState.Binding public var isFocusedOn: STTextFieldType?
     var textFields: [InputFieldType]
     var foregroundColor: Color = .ST_595757
+    var isShowIcon: Bool = true
     var style: STFieldStyle = .normal
     var spacing: CGFloat = 10
     var titleSpacing: CGFloat = 5
@@ -16,6 +17,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         isFocusedOn: FocusState<STTextFieldType?>.Binding,
         textFields: [InputFieldType],
         foregroundColor: Color = .ST_595757,
+        isShowIcon: Bool = false,
         style: STFieldStyle = .normal,
         spacing: CGFloat = 10,
         titleSpacing: CGFloat = 5,
@@ -25,6 +27,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         _isFocusedOn = isFocusedOn
         self.textFields = textFields
         self.foregroundColor = foregroundColor
+        self.isShowIcon = isShowIcon
         self.style = style
         self.spacing = spacing
         self.titleSpacing = titleSpacing
@@ -46,11 +49,11 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     // Find textfield type
     private func findField(for element: InputFieldType) -> STTextFieldType {
             switch element {
-            case .secure(_, let textFieldType, _):
+            case .secure(_, let textFieldType):
                 return textFieldType
-            case .text(_, let textFieldType, _):
+            case .text(_, let textFieldType):
                 return textFieldType
-            case .date(_, let textFieldType, _, _):
+            case .date(_, let textFieldType, _):
                 return textFieldType
             }
     }
@@ -61,24 +64,25 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         VStack(alignment: .leading, spacing: titleSpacing) {
             switch element {
                 
-            case .secure(let binding, let textFieldType, _):
+            case .secure(let binding, let textFieldType):
                 
                 STSecureField(
                     password: binding,
                     style: style,
                     placeholder: textFieldType.placeholder,
-                    isShowIcon: false,
+                    isShowIcon: self.isShowIcon,
                     isFieldFocus: $isFocusedOn,
                     fieldType: textFieldType)
                 .fieldSetting(keyboardType: .asciiCapable)
                 .onSubmit { submitAction(index: index) }
                 .onTapGesture {}
                 
-            case .text(let binding, let textFieldType, _):
+            case .text(let binding, let textFieldType):
                 
                 STTextFeild(
                     inputData: binding,
                     placeholder: textFieldType.placeholder,
+                    isShowIcon: self.isShowIcon,
                     foregroundColor: foregroundColor,
                     style: style,
                     fieldType: textFieldType
@@ -91,7 +95,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     submitAction(index: index)
                 }
                 
-            case .date(let binding, let textFieldType, let restriction, _):
+            case .date(let binding, let textFieldType, let restriction):
 
                 STDateField(
                     placeholder: textFieldType.placeholder,
@@ -111,11 +115,11 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         let nextIndex = index + 1
         if nextIndex < textFields.count {
             switch textFields[nextIndex] {
-            case .text(_, let nextType, _):
+            case .text(_, let nextType):
                 isFocusedOn = nextType
-            case .date(_, let nextType, _, _):
+            case .date(_, let nextType, _):
                 isFocusedOn = nextType
-            case .secure(_, let nextType, _):
+            case .secure(_, let nextType):
                 isFocusedOn = nextType
             }
         } else {

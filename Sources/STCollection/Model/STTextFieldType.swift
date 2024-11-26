@@ -16,25 +16,6 @@ public extension STTextFieldTypeProtocol {
     var keyboardType: UIKeyboardType { .default }
 }
 
-// Generic struct conforming to the protocol for custom use
-//public struct STTextFieldType: STTextFieldTypeProtocol {
-//    public var title: String
-//    public var placeholder: String
-//    public var icon: Image?
-//    public var keyboardType: UIKeyboardType
-//    
-//    public init(title: String, placeholder: String, icon: Image? = nil, keyboardType: UIKeyboardType = .default) {
-//        self.title = title
-//        self.placeholder = placeholder
-//        self.icon = icon
-//        self.keyboardType = keyboardType
-//    }
-//    
-//    public func hash(into hasher: inout Hasher) {
-//        hasher.combine(title)
-//    }
-//}
-
 public struct STTextFieldType: STTextFieldTypeProtocol {
     private var titleKey: String
     private var placeholderKey: String
