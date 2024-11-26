@@ -77,6 +77,7 @@ public struct STTextFieldList: View {
                             isFieldFocus: $isFocusedOn,
                             fieldType: textFieldType)
                         .fieldSetting(keyboardType: textFieldType.keyboardType)
+                        .id(textFieldType.title)
                         .onSubmit { submitAction(index: index) }
                     
                     case .text(let binding, let textFieldType):
@@ -91,6 +92,7 @@ public struct STTextFieldList: View {
                             style: style,
                             fieldType: textFieldType)
                         .fieldSetting(keyboardType: textFieldType.keyboardType)
+                        .id(textFieldType.title)
                         .focused($isFocusedOn, equals: textFieldType)
                         .padding(.bottom, 8)
                         .onSubmit { submitAction(index: index) }
@@ -106,6 +108,7 @@ public struct STTextFieldList: View {
                             style: style,
                             dateRestriction: restriction)
                         .padding(.bottom, 8)
+                        .id(textFieldType.title)
                     }
                 }
             }

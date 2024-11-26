@@ -74,6 +74,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     isFieldFocus: $isFocusedOn,
                     fieldType: textFieldType)
                 .fieldSetting(keyboardType: .asciiCapable)
+                .id(textFieldType.title)
                 .onSubmit { submitAction(index: index) }
                 .onTapGesture {}
                 
@@ -88,8 +89,8 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     fieldType: textFieldType
                 )
                 .fieldSetting(keyboardType: textFieldType.keyboardType)
+                .id(textFieldType.title)
                 .focused($isFocusedOn, equals: textFieldType)
-                //.padding(.bottom, 8)
                 .onTapGesture {}
                 .onSubmit {
                     submitAction(index: index)
@@ -103,8 +104,8 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     foregroundColor: foregroundColor,
                     style: style,
                     dateRestriction: restriction)
+                .id(textFieldType.title)
                 .onTapGesture {}
-                //.padding(.bottom, 8)
             }
         }
     }
