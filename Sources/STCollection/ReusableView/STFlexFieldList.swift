@@ -15,6 +15,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     
     var returnedTextField: (AnyView, STTextFieldType, String?) -> ReturnedView
     var returnValue: ((String) -> Void)?
+    var onSubmit: (() -> Void)?
     
     public init(
         isFocusedOn: FocusState<STTextFieldType?>.Binding,
@@ -25,8 +26,8 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         spacing: CGFloat = 10,
         titleSpacing: CGFloat = 5,
         titleColor: Color = .ST_1B0851,
-        returnedTextField: @escaping (AnyView, STTextFieldType, String?) -> ReturnedView
-        //onChange: ((String) -> Void)? = nil
+        returnedTextField: @escaping (AnyView, STTextFieldType, String?) -> ReturnedView,
+        onSubmit: (() -> Void)? = nil
     ) {
         _isFocusedOn = isFocusedOn
         self.textFields = textFields
@@ -37,6 +38,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         self.titleSpacing = titleSpacing
         self.titleColor = titleColor
         self.returnedTextField = returnedTextField
+        self.onSubmit = onSubmit
     }
     
     public var body: some View {
@@ -84,7 +86,10 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     }
                     .fieldSetting(keyboardType: .asciiCapable)
                     .id(textFieldType.title)
-                    .onSubmit { submitAction(index: index) }
+                    .onSubmit {
+                        submitAction(index: index)
+                        onSubmit?()
+                    }
                     .onTapGesture {}
                 
                 
@@ -98,7 +103,6 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     style: style,
                     fieldType: textFieldType) { value in
                         currentValues[textFieldType] = value
-                        //onChange?(value)
                     }
                 .fieldSetting(keyboardType: textFieldType.keyboardType)
                 .id(textFieldType.title)
@@ -106,6 +110,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                 .onTapGesture {}
                 .onSubmit {
                     submitAction(index: index)
+                    onSubmit?()
                 }
                 
                 
