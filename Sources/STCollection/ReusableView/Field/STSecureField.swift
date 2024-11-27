@@ -16,6 +16,7 @@ public struct STSecureField: View {
     @State var isShowIcon: Bool = false
     @FocusState.Binding var isFieldFocus: STTextFieldType?
     let fieldType: STTextFieldType
+    var onChange: ((String) -> Void)?
     
     public init(
         password: Binding<String>,
@@ -24,14 +25,17 @@ public struct STSecureField: View {
         isShowingPassword: Bool = false,
         isShowIcon: Bool = true,
         isFieldFocus: FocusState<STTextFieldType?>.Binding,
-        fieldType: STTextFieldType) {
-            self._password = password
-            self.style = style
-            self.placeholder = placeholder
-            self.isShowingPassword = isShowingPassword
-            self.isShowIcon = isShowIcon
-            self._isFieldFocus = isFieldFocus
-            self.fieldType = fieldType
+        fieldType: STTextFieldType,
+        onChange: ((String) -> Void)? = nil
+    ) {
+        self._password = password
+        self.style = style
+        self.placeholder = placeholder
+        self.isShowingPassword = isShowingPassword
+        self.isShowIcon = isShowIcon
+        self._isFieldFocus = isFieldFocus
+        self.fieldType = fieldType
+        self.onChange = onChange
         }
     
     public var body: some View {
@@ -53,6 +57,9 @@ public struct STSecureField: View {
                         .focused($isFieldFocus, equals: fieldType)
                         .opacity(isShowingPassword ? 0: 1)
                 }
+            }
+            .onChange(of: password) { _, value in
+                onChange?(value)
             }
             .customDynamicSize(font: .callout, ...DynamicTypeSize.accessibility1)
             .fontWeight(.bold)

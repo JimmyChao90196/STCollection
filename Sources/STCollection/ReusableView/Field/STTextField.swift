@@ -19,13 +19,16 @@ public struct STTextFeild: View {
     var style: STFieldStyle = .normal
     let fieldType: STTextFieldType
     
+    var onChange: ((String) -> Void)?
+    
     public init(
             inputData: Binding<String>,
             placeholder: String,
             isShowIcon: Bool = true,
             foregroundColor: Color = Color.ST_595757,
             style: STFieldStyle = .normal,
-            fieldType: STTextFieldType
+            fieldType: STTextFieldType,
+            onChange: ((String) -> Void)? = nil
     ) {
         self._inputData = inputData
         self.placeholder = placeholder
@@ -33,6 +36,7 @@ public struct STTextFeild: View {
         self.foregroundColor = foregroundColor
         self.style = style
         self.fieldType = fieldType
+        self.onChange = onChange
     }
     
     public var body: some View {
@@ -51,6 +55,9 @@ public struct STTextFeild: View {
                 .multilineTextAlignment(.leading)
                 .padding(5)
                 .frame(maxWidth: .infinity)
+                .onChange(of: inputData) { _, newValue in
+                    onChange?(newValue)
+                }
         }
         .doubleIf(style == .normal, style == .original, then: { view in
             view

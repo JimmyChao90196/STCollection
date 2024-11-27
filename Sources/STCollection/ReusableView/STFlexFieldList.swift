@@ -3,6 +3,8 @@ import SwiftUI
 public struct STFlexFieldList<ReturnedView: View>: View {
     
     @FocusState.Binding public var isFocusedOn: STTextFieldType?
+    @State var currentValue: String? = nil
+    @State var currentValues: [STTextFieldType: String] = [:]
     var textFields: [InputFieldType]
     var foregroundColor: Color = .ST_595757
     var isShowIcon: Bool = true
@@ -11,7 +13,8 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     var titleSpacing: CGFloat = 5
     var titleColor: Color = .ST_1B0851
     
-    var returnedTextField: (AnyView, STTextFieldType) -> ReturnedView
+    var returnedTextField: (AnyView, STTextFieldType, String?) -> ReturnedView
+    var returnValue: ((String) -> Void)?
     
     public init(
         isFocusedOn: FocusState<STTextFieldType?>.Binding,
@@ -22,7 +25,8 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         spacing: CGFloat = 10,
         titleSpacing: CGFloat = 5,
         titleColor: Color = .ST_1B0851,
-        returnedTextField: @escaping (AnyView, STTextFieldType) -> ReturnedView
+        returnedTextField: @escaping (AnyView, STTextFieldType, String?) -> ReturnedView
+        //onChange: ((String) -> Void)? = nil
     ) {
         _isFocusedOn = isFocusedOn
         self.textFields = textFields
@@ -40,7 +44,8 @@ public struct STFlexFieldList<ReturnedView: View>: View {
             ForEach(Array(textFields.enumerated()), id: \.element) { index, element in
                 returnedTextField(
                     AnyView(createTextFieldView(for: element, index: index)),
-                    findField(for: element)
+                    findField(for: element),
+                    currentValues[findField(for: element)]
                 )
             }
         }
@@ -48,14 +53,14 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     
     // Find textfield type
     private func findField(for element: InputFieldType) -> STTextFieldType {
-            switch element {
-            case .secure(_, let textFieldType):
-                return textFieldType
-            case .text(_, let textFieldType):
-                return textFieldType
-            case .date(_, let textFieldType, _):
-                return textFieldType
-            }
+        switch element {
+        case .secure(_, let textFieldType):
+            return textFieldType
+        case .text(_, let textFieldType):
+            return textFieldType
+        case .date(_, let textFieldType, _):
+            return textFieldType
+        }
     }
     
     // Create Input views
@@ -72,11 +77,16 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     placeholder: textFieldType.placeholder,
                     isShowIcon: self.isShowIcon,
                     isFieldFocus: $isFocusedOn,
-                    fieldType: textFieldType)
-                .fieldSetting(keyboardType: .asciiCapable)
-                .id(textFieldType.title)
-                .onSubmit { submitAction(index: index) }
-                .onTapGesture {}
+                    fieldType: textFieldType) { value in
+                        
+                        currentValues[textFieldType] = value
+                        //onChange?(value)
+                    }
+                    .fieldSetting(keyboardType: .asciiCapable)
+                    .id(textFieldType.title)
+                    .onSubmit { submitAction(index: index) }
+                    .onTapGesture {}
+                
                 
             case .text(let binding, let textFieldType):
                 
@@ -86,8 +96,10 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     isShowIcon: self.isShowIcon,
                     foregroundColor: foregroundColor,
                     style: style,
-                    fieldType: textFieldType
-                )
+                    fieldType: textFieldType) { value in
+                        currentValues[textFieldType] = value
+                        //onChange?(value)
+                    }
                 .fieldSetting(keyboardType: textFieldType.keyboardType)
                 .id(textFieldType.title)
                 .focused($isFocusedOn, equals: textFieldType)
@@ -96,8 +108,9 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     submitAction(index: index)
                 }
                 
+                
             case .date(let binding, let textFieldType, let restriction):
-
+                
                 STDateField(
                     placeholder: textFieldType.placeholder,
                     selectedDate: binding,
