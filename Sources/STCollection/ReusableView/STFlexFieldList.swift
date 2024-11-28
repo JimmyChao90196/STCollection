@@ -90,7 +90,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     .fieldSetting(keyboardType: .asciiCapable)
                     .id(textFieldType.title)
                     .onSubmit {
-                        submitAction(index: index)
+                        //submitAction(index: index)
                         onSubmit?()
                     }
                     .onTapGesture {}
@@ -112,7 +112,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                 .id(textFieldType.title)
                 .focused($isFocusedOn, equals: textFieldType)
                 .onSubmit {
-                    submitAction(index: index)
+                    //submitAction(index: index)
                     onSubmit?()
                 }
                 .onTapGesture {}
