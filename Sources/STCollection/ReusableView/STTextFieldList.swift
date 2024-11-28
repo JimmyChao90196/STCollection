@@ -10,7 +10,7 @@ public enum InputFieldType: Hashable {
         switch self {
         case .text(_, let type):
             return type
-        case .date(_, let type, let restriction):
+        case .date(_, let type, _):
             return type
         case .secure(_, let type):
             return type

@@ -6,6 +6,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     @State var currentValue: String? = nil
     @State var currentValues: [STTextFieldType: String] = [:]
     var textFields: [InputFieldType]
+    var axis: Axis.Set = .vertical
     var isDisableAutoCorrecting: Bool = true
     var foregroundColor: Color = .ST_595757
     var isShowIcon: Bool = true
@@ -21,6 +22,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     public init(
         isFocusedOn: FocusState<STTextFieldType?>.Binding,
         textFields: [InputFieldType],
+        axis: Axis.Set = .vertical,
         isDisableAutoCorrecting: Bool = true,
         foregroundColor: Color = .ST_595757,
         isShowIcon: Bool = false,
@@ -33,6 +35,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     ) {
         _isFocusedOn = isFocusedOn
         self.textFields = textFields
+        self.axis = axis
         self.isDisableAutoCorrecting = isDisableAutoCorrecting
         self.foregroundColor = foregroundColor
         self.isShowIcon = isShowIcon
@@ -45,13 +48,28 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     }
     
     public var body: some View {
-        VStack(spacing: spacing) {
-            ForEach(Array(textFields.enumerated()), id: \.element) { index, element in
-                returnedTextField(
-                    AnyView(createTextFieldView(for: element, index: index)),
-                    findField(for: element),
-                    currentValues[findField(for: element)]
-                )
+        
+        switch axis {
+        
+        case .vertical:
+            VStack(spacing: spacing) {
+                ForEach(Array(textFields.enumerated()), id: \.element) { index, element in
+                    returnedTextField(
+                        AnyView(createTextFieldView(for: element, index: index)),
+                        findField(for: element),
+                        currentValues[findField(for: element)]
+                    )
+                }
+            }
+        default:
+            HStack(spacing: spacing) {
+                ForEach(Array(textFields.enumerated()), id: \.element) { index, element in
+                    returnedTextField(
+                        AnyView(createTextFieldView(for: element, index: index)),
+                        findField(for: element),
+                        currentValues[findField(for: element)]
+                    )
+                }
             }
         }
     }
