@@ -6,6 +6,17 @@ public enum InputFieldType: Hashable {
     case date(binding: Binding<Date>, type: STTextFieldType, restriction: DateRestriction)
     case secure(binding: Binding<String>, type: STTextFieldType)
     
+    var fieldTypeProperty: STTextFieldType {
+        switch self {
+        case .text(_, let type):
+            return type
+        case .date(_, let type, let restriction):
+            return type
+        case .secure(_, let type):
+            return type
+        }
+    }
+    
     public func hash(into hasher: inout Hasher) {
         switch self {
         case .text(_, let type):
