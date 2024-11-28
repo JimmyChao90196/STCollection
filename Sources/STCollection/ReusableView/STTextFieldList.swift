@@ -6,7 +6,7 @@ public enum InputFieldType: Hashable {
     case date(binding: Binding<Date>, type: STTextFieldType, restriction: DateRestriction)
     case secure(binding: Binding<String>, type: STTextFieldType)
     
-    var fieldTypeProperty: STTextFieldType {
+    public var fieldType: STTextFieldType {
         switch self {
         case .text(_, let type):
             return type
