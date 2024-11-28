@@ -63,7 +63,6 @@ public struct STSecureField: View {
             }
             .customDynamicSize(font: .callout, ...DynamicTypeSize.accessibility1)
             .fontWeight(.bold)
-            .disableAutocorrection(true)
             .autocapitalization(.none)
             .multilineTextAlignment(.leading)
             .padding(5)

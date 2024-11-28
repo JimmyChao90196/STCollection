@@ -6,6 +6,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     @State var currentValue: String? = nil
     @State var currentValues: [STTextFieldType: String] = [:]
     var textFields: [InputFieldType]
+    var isDisableAutoCorrecting: Bool = true
     var foregroundColor: Color = .ST_595757
     var isShowIcon: Bool = true
     var style: STFieldStyle = .normal
@@ -20,6 +21,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     public init(
         isFocusedOn: FocusState<STTextFieldType?>.Binding,
         textFields: [InputFieldType],
+        isDisableAutoCorrecting: Bool = true,
         foregroundColor: Color = .ST_595757,
         isShowIcon: Bool = false,
         style: STFieldStyle = .normal,
@@ -31,6 +33,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     ) {
         _isFocusedOn = isFocusedOn
         self.textFields = textFields
+        self.isDisableAutoCorrecting = isDisableAutoCorrecting
         self.foregroundColor = foregroundColor
         self.isShowIcon = isShowIcon
         self.style = style
@@ -91,6 +94,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                         onSubmit?()
                     }
                     .onTapGesture {}
+                    .disableAutocorrection(isDisableAutoCorrecting)
                 
                 
             case .text(let binding, let textFieldType):
@@ -107,11 +111,12 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                 .fieldSetting(keyboardType: textFieldType.keyboardType)
                 .id(textFieldType.title)
                 .focused($isFocusedOn, equals: textFieldType)
-                .onTapGesture {}
                 .onSubmit {
                     submitAction(index: index)
                     onSubmit?()
                 }
+                .onTapGesture {}
+                .disableAutocorrection(isDisableAutoCorrecting)
                 
                 
             case .date(let binding, let textFieldType, let restriction):
