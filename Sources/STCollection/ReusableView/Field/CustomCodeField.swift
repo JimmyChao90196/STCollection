@@ -12,47 +12,60 @@ public struct STCodeField: View {
     @Binding var digits: [String]
     @FocusState private var focusedField: Int?
     
+    var cornerRadius: CGFloat
+    var spacing: CGFloat
+    
     public init(
-        digits: Binding<[String]>
+        digits: Binding<[String]>,
+        cornerRadius: CGFloat = 16,
+        spacing: CGFloat = 30
     ) {
         self._digits = digits
+        self.cornerRadius = cornerRadius
+        self.spacing = spacing
     }
     
     public var body: some View {
-        HStack(spacing: 30) {
+        HStack(spacing: spacing) {
             ForEach(0..<digits.count, id: \.self) { index in
-                TextField("", text: $digits[index])
-                    .textFieldStyle(.plain)
-                    .frame(width: 65, height: 65)
-                    .clipShape(RoundedRectangle(cornerRadius: 16))
-                    .multilineTextAlignment(.center)
-                    .keyboardType(.numberPad)
-                    .focused($focusedField, equals: index)
-                    .onChange(of: digits[index]) { oldValue, newValue in
-                        if newValue.count > 1 {
-                            digits[index] = String(newValue.last!)
+                GeometryReader { proxy in
+                    
+                    TextField("", text: $digits[index])
+                        .textFieldStyle(.plain)
+                    //.frame(width: 65, height: 65)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: proxy.size.width)
+                        .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
+                        .multilineTextAlignment(.center)
+                        .keyboardType(.numberPad)
+                        .focused($focusedField, equals: index)
+                        .onChange(of: digits[index]) { oldValue, newValue in
+                            if newValue.count > 1 {
+                                digits[index] = String(newValue.last!)
+                            }
+                            if newValue.count == 1 && index < digits.count - 1 {
+                                focusedField = index + 1
+                            } else if newValue.isEmpty && index > 0 {
+                                focusedField = index - 1
+                            }
                         }
-                        if newValue.count == 1 && index < digits.count - 1 {
-                            focusedField = index + 1
-                        } else if newValue.isEmpty && index > 0 {
-                            focusedField = index - 1
+                        .onSubmit {
+                            if index < digits.count - 1 {
+                                focusedField = index + 1
+                            }
                         }
-                    }
-                    .onSubmit {
-                        if index < digits.count - 1 {
-                            focusedField = index + 1
-                        }
-                    }
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 16)
-                            .stroke(Color.black, lineWidth: 1.0)
-                    )
+                        .overlay(
+                            RoundedRectangle(cornerRadius: cornerRadius)
+                                .stroke(Color.black, lineWidth: 1.0)
+                        )
+                }
             }
         }
         .contentShape(Rectangle())
         .onTapGesture {
             handleTap()
         }
+        .padding(.horizontal)
     }
     
     private func handleTap() {
@@ -70,4 +83,11 @@ public struct STCodeField: View {
             focusedField = digits.count - 1
         }
     }
+}
+
+#Preview {
+    //STCodeField(digits: .constant(Array(repeating: "", count: 6)))
+    STCodeField(digits: .constant(Array(repeating: "", count: 6)),
+                cornerRadius: 10,
+                spacing: 20)
 }
