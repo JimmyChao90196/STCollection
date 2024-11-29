@@ -14,15 +14,18 @@ public struct STCodeField: View {
     
     var cornerRadius: CGFloat
     var spacing: CGFloat
+    var strokeColor: Color
     
     public init(
         digits: Binding<[String]>,
         cornerRadius: CGFloat = 16,
-        spacing: CGFloat = 30
+        spacing: CGFloat = 30,
+        strokeColor: Color = .black
     ) {
         self._digits = digits
         self.cornerRadius = cornerRadius
         self.spacing = spacing
+        self.strokeColor = strokeColor
     }
     
     public var body: some View {
@@ -32,7 +35,6 @@ public struct STCodeField: View {
                     
                     TextField("", text: $digits[index])
                         .textFieldStyle(.plain)
-                    //.frame(width: 65, height: 65)
                         .frame(maxWidth: .infinity)
                         .frame(height: proxy.size.width)
                         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
@@ -56,7 +58,7 @@ public struct STCodeField: View {
                         }
                         .overlay(
                             RoundedRectangle(cornerRadius: cornerRadius)
-                                .stroke(Color.black, lineWidth: 1.0)
+                                .stroke(strokeColor, lineWidth: 1.0)
                         )
                 }
             }
