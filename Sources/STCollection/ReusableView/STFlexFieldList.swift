@@ -15,7 +15,21 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     var titleSpacing: CGFloat = 5
     var titleColor: Color = .ST_1B0851
     
+    
+    // View
     var returnedTextField: (AnyView, STTextFieldType, String?) -> ReturnedView
+    
+    // Error
+    @State var isEmpty: [STTextFieldType: (Bool, LocalizedStringKey?)] = [:]
+    @State var isValid: [STTextFieldType: (Bool, LocalizedStringKey?)] = [:]
+    @State var isStepValid: [STTextFieldType: [String: (LocalizedStringKey, Bool)]] = [:]
+    
+    var errorHandeling: ((
+        [STTextFieldType: (Bool, LocalizedStringKey?)],
+        [STTextFieldType: (Bool, LocalizedStringKey?)],
+        [STTextFieldType: [String: (LocalizedStringKey, Bool)]]
+    ) -> Void)?
+    
     var returnValue: ((String) -> Void)?
     var onSubmit: (() -> Void)?
     
@@ -31,6 +45,11 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         titleSpacing: CGFloat = 5,
         titleColor: Color = .ST_1B0851,
         returnedTextField: @escaping (AnyView, STTextFieldType, String?) -> ReturnedView,
+        errorHandeling: ((
+        [STTextFieldType: (Bool, LocalizedStringKey?)],
+        [STTextFieldType: (Bool, LocalizedStringKey?)],
+        [STTextFieldType: [String: (LocalizedStringKey, Bool)]]
+    ) -> Void)? = nil,
         onSubmit: (() -> Void)? = nil
     ) {
         _isFocusedOn = isFocusedOn
@@ -44,6 +63,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         self.titleSpacing = titleSpacing
         self.titleColor = titleColor
         self.returnedTextField = returnedTextField
+        self.errorHandeling = errorHandeling
         self.onSubmit = onSubmit
     }
     
@@ -61,6 +81,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     )
                 }
             }
+            
         default:
             HStack(spacing: spacing) {
                 ForEach(Array(textFields.enumerated()), id: \.element) { index, element in
@@ -77,11 +98,11 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     // Find textfield type
     private func findField(for element: InputFieldType) -> STTextFieldType {
         switch element {
-        case .secure(_, let textFieldType):
+        case .secure(_, let textFieldType, _):
             return textFieldType
-        case .text(_, let textFieldType):
+        case .text(_, let textFieldType, _):
             return textFieldType
-        case .date(_, let textFieldType, _):
+        case .date(_, let textFieldType, _, _):
             return textFieldType
         }
     }
@@ -92,7 +113,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
         VStack(alignment: .leading, spacing: titleSpacing) {
             switch element {
                 
-            case .secure(let binding, let textFieldType):
+            case .secure(let binding, let textFieldType, let validator):
                 
                 STSecureField(
                     password: binding,
@@ -103,19 +124,23 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     fieldType: textFieldType) { value in
                         
                         currentValues[textFieldType] = value
-                        //onChange?(value)
+                        isEmpty[textFieldType] = validator?.isEmpty() ?? (false, nil)
+                        isValid[textFieldType] = validator?.validate() ?? (false, nil)
+                        isStepValid[textFieldType] = validator?.stepValidate() ?? [:]
+                        
+                        errorHandeling?(isEmpty, isValid, isStepValid)
                     }
                     .fieldSetting(keyboardType: .asciiCapable)
                     .id(textFieldType.title)
                     .onSubmit {
-                        //submitAction(index: index)
+                        
                         onSubmit?()
                     }
                     .onTapGesture {}
                     .disableAutocorrection(isDisableAutoCorrecting)
                 
                 
-            case .text(let binding, let textFieldType):
+            case .text(let binding, let textFieldType, let validator):
                 
                 STTextFeild(
                     inputData: binding,
@@ -125,19 +150,24 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     style: style,
                     fieldType: textFieldType) { value in
                         currentValues[textFieldType] = value
+                        
+                        isEmpty[textFieldType] = validator?.isEmpty() ?? (false, nil)
+                        isValid[textFieldType] = validator?.validate() ?? (false, nil)
+                        isStepValid[textFieldType] = validator?.stepValidate() ?? [:]
+                        
+                        errorHandeling?(isEmpty, isValid, isStepValid)
                     }
                 .fieldSetting(keyboardType: textFieldType.keyboardType)
                 .id(textFieldType.title)
                 .focused($isFocusedOn, equals: textFieldType)
                 .onSubmit {
-                    //submitAction(index: index)
                     onSubmit?()
                 }
                 .onTapGesture {}
                 .disableAutocorrection(isDisableAutoCorrecting)
                 
                 
-            case .date(let binding, let textFieldType, let restriction):
+            case .date(let binding, let textFieldType, let restriction, _):
                 
                 STDateField(
                     placeholder: textFieldType.placeholder,
@@ -145,6 +175,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     foregroundColor: foregroundColor,
                     style: style,
                     dateRestriction: restriction)
+                
                 .id(textFieldType.title)
                 .onTapGesture {}
             }
@@ -152,20 +183,23 @@ public struct STFlexFieldList<ReturnedView: View>: View {
     }
     
     // MARK: Helper function -
-    // Switch focus to the next text field based on the current index
     private func submitAction(index: Int) {
         let nextIndex = index + 1
         if nextIndex < textFields.count {
             switch textFields[nextIndex] {
-            case .text(_, let nextType):
+            case .text(_, let nextType, _):
                 isFocusedOn = nextType
-            case .date(_, let nextType, _):
+            case .date(_, let nextType, _, _):
                 isFocusedOn = nextType
-            case .secure(_, let nextType):
+            case .secure(_, let nextType, _):
                 isFocusedOn = nextType
             }
         } else {
             isFocusedOn = nil
         }
+    }
+
+    private func errorHandeler(validator: Validator) {
+        
     }
 }

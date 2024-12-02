@@ -1,40 +1,42 @@
 
 import SwiftUI
 
+public typealias TFRegistry = TextFieldTypeRegistry
+
 public enum InputFieldType: Hashable {
-    case text(binding: Binding<String>, type: STTextFieldType)
-    case date(binding: Binding<Date>, type: STTextFieldType, restriction: DateRestriction)
-    case secure(binding: Binding<String>, type: STTextFieldType)
+    case text(binding: Binding<String>, type: STTextFieldType, validator: (any Validator)? = nil)
+    case date(binding: Binding<Date>, type: STTextFieldType, restriction: DateRestriction, validator: (any Validator)? = nil)
+    case secure(binding: Binding<String>, type: STTextFieldType, validator: (any Validator)? = nil)
     
     public var fieldType: STTextFieldType {
         switch self {
-        case .text(_, let type):
+        case .text(_, let type, _):
             return type
-        case .date(_, let type, _):
+        case .date(_, let type, _, _):
             return type
-        case .secure(_, let type):
+        case .secure(_, let type, _):
             return type
         }
     }
     
     public func hash(into hasher: inout Hasher) {
         switch self {
-        case .text(_, let type):
+        case .text(_, let type, _):
             hasher.combine(type.title)
-        case .date(_, let type, _):
+        case .date(_, let type, _, _):
             hasher.combine(type.title)
-        case .secure(_, let type):
+        case .secure(_, let type, _):
             hasher.combine(type.title)
         }
     }
     
     public static func == (lhs: InputFieldType, rhs: InputFieldType) -> Bool {
         switch (lhs, rhs) {
-        case (.text(_, let lhsType), .text(_, let rhsType)):
+        case (.text(_, let lhsType, _), .text(_, let rhsType, _)):
             return lhsType.title == rhsType.title
-        case (.date(_, let lhsType, _), .date(_, let rhsType, _)):
+        case (.date(_, let lhsType, _, _), .date(_, let rhsType, _, _)):
             return lhsType.title == rhsType.title
-        case (.secure(_, let lhsType), .secure(_, let rhsType)):
+        case (.secure(_, let lhsType, _), .secure(_, let rhsType, _)):
             return lhsType.title == rhsType.title
         default:
             return false
@@ -76,7 +78,7 @@ public struct STTextFieldList: View {
             ForEach(Array(textFields.enumerated()), id: \.offset) { index, element in
                 VStack(alignment: .leading, spacing: titleSpacing) {
                     switch element {
-                    case .secure(let binding, let textFieldType):
+                    case .secure(let binding, let textFieldType, _):
 
                         fieldTitleMaker(textFieldType)
                         
@@ -91,7 +93,7 @@ public struct STTextFieldList: View {
                         .id(textFieldType.title)
                         .onSubmit { submitAction(index: index) }
                     
-                    case .text(let binding, let textFieldType):
+                    case .text(let binding, let textFieldType, _):
 
                         fieldTitleMaker(textFieldType)
                         
@@ -108,7 +110,7 @@ public struct STTextFieldList: View {
                         .padding(.bottom, 8)
                         .onSubmit { submitAction(index: index) }
                     
-                    case .date(let binding, let textFieldType, let restriction):
+                    case .date(let binding, let textFieldType, let restriction, _):
 
                         fieldTitleMaker(textFieldType)
                         
@@ -138,11 +140,11 @@ public struct STTextFieldList: View {
         let nextIndex = index + 1
         if nextIndex < textFields.count {
             switch textFields[nextIndex] {
-            case .text(_, let nextType):
+            case .text(_, let nextType, _):
                 isFocusedOn = nextType
-            case .date(_, let nextType, _):
+            case .date(_, let nextType, _, _):
                 isFocusedOn = nextType
-            case .secure(_, let nextType):
+            case .secure(_, let nextType, _):
                 isFocusedOn = nextType
             }
         } else {
