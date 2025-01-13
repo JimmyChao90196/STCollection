@@ -54,8 +54,8 @@ public struct STButtonStyle: ButtonStyle {
             .padding(.vertical, vPadding)
             .padding(.horizontal, 5)
             .frame(maxWidth: .infinity)
-            .bubbleStyle(backgroundColor, cornerRadius)
-            .foregroundStyle(!isDisalbe ? foregroundColor: .gray.opacity(0.5))
+            .bubbleStyle(!isDisalbe ? backgroundColor: Color(hex: "#D9D9D9"), cornerRadius)
+            .foregroundStyle(!isDisalbe ? foregroundColor: Color(hex: "#494949"))
             .shadow(color: .black.opacity(0.35), radius: 2, x: 0, y: 4)
             .overlay {
                 RoundedRectangle(cornerRadius: cornerRadius).stroke(strokeColor, lineWidth: 1.25)
