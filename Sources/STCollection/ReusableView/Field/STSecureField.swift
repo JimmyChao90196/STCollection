@@ -78,7 +78,7 @@ public struct STSecureField: View {
                     .frame(width: 27, height: 27)
             }
             .frame(maxWidth: 30, alignment: .trailing)
-            .foregroundStyle(.ST_1B0851)
+            .foregroundStyle(Color(hex: "#77330D"))
             .padding(.trailing)
         }
         .doubleIf(style == .normal, style == .original, then: { view in
