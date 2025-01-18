@@ -23,8 +23,8 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     
     public init(
         datas: [InputData],
-        initPadding: CGFloat = 10,
-        contentPadding: CGFloat = 0,
+        initPadding: CGFloat = 16,
+        contentPadding: CGFloat = 10,
         cardView: @escaping (InputData) -> Card,
         @ViewBuilder headerView: () -> Header,
         @ViewBuilder footerView: () -> Footer,
