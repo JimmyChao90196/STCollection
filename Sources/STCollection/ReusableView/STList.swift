@@ -14,6 +14,7 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     // Source
     var datas: [InputData]
     var initPadding: CGFloat
+    var contentPadding: CGFloat
     var cardView: (InputData) -> Card
     var footerView: Footer
     var headerView: Header
@@ -22,7 +23,8 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     
     public init(
         datas: [InputData],
-        initPadding: CGFloat = 16,
+        initPadding: CGFloat = 10,
+        contentPadding: CGFloat = 0,
         cardView: @escaping (InputData) -> Card,
         @ViewBuilder headerView: () -> Header,
         @ViewBuilder footerView: () -> Footer,
@@ -30,6 +32,7 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     ) {
         self.datas = datas
         self.initPadding = initPadding
+        self.contentPadding = contentPadding
         self.cardView = cardView
         self.headerView = headerView()
         self.footerView = footerView()
@@ -39,10 +42,12 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
     public init(
         datas: [InputData],
         initPadding: CGFloat = 16,
+        contentPadding: CGFloat = 10,
         cardView: @escaping (InputData) -> Card,
         onDelete: ((IndexSet) -> Void)? = nil) where Footer == Color, Header == Color {
         self.datas = datas
         self.initPadding = initPadding
+        self.contentPadding = contentPadding
         self.cardView = cardView
         self.footerView = Color.clear
         self.headerView = Color.clear
@@ -60,7 +65,7 @@ public struct STList<InputData, Card: View, Header: View, Footer: View>: View {
             ForEach(datas.indices, id:\.self) { index in
                 cardView(datas[index])
                 .primListRowStyle()
-                .padding(.vertical, 10)
+                .padding(.vertical, contentPadding)
                 .padding(.horizontal, 2)
             }
             .if(onDelete != nil, then: { view in
