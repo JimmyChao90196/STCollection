@@ -17,8 +17,8 @@ public struct STTextFeild: View {
 
     var foregroundColor: Color = Color.ST_595757
     var style: STFieldStyle = .normal
+    var fontWeight: Font.Weight = .regular
     let fieldType: STTextFieldType
-    
     var onChange: ((String) -> Void)?
     
     public init(
@@ -27,6 +27,7 @@ public struct STTextFeild: View {
             isShowIcon: Bool = true,
             foregroundColor: Color = Color.ST_595757,
             style: STFieldStyle = .normal,
+            fontWeight: Font.Weight = .regular,
             fieldType: STTextFieldType,
             onChange: ((String) -> Void)? = nil
     ) {
@@ -35,6 +36,7 @@ public struct STTextFeild: View {
         self.isShowIcon = isShowIcon
         self.foregroundColor = foregroundColor
         self.style = style
+        self.fontWeight = fontWeight
         self.fieldType = fieldType
         self.onChange = onChange
     }
@@ -51,7 +53,7 @@ public struct STTextFeild: View {
             TextField("", text: $inputData)
                 .placeholder(placeholder, when: inputData.isEmpty)
                 .customDynamicSize(font: .callout, ...DynamicTypeSize.accessibility1)
-                .fontWeight(.bold)
+                .fontWeight(self.fontWeight)
                 .multilineTextAlignment(.leading)
                 .padding(5)
                 .frame(maxWidth: .infinity)

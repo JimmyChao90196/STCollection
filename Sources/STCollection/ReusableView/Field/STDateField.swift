@@ -18,6 +18,7 @@ public struct STDateField: View {
     let placeholder: String
     var foregroundColor: Color = Color.ST_595757
     var style: STFieldStyle = .normal
+    var fontWeight: Font.Weight = .regular
     
     @Binding var selectedDate: Date
     @State var dateRestriction: DateRestriction = .none
@@ -29,6 +30,7 @@ public struct STDateField: View {
         selectedDate: Binding<Date>,
         foregroundColor: Color = Color.ST_595757,
         style: STFieldStyle = .normal,
+        fontWeight: Font.Weight = .regular,
         dateRestriction: DateRestriction = .none,
         action: (() -> Void)? = nil
     ) {
@@ -36,6 +38,7 @@ public struct STDateField: View {
         self._selectedDate = selectedDate
         self.foregroundColor = foregroundColor
         self.style = style
+        self.fontWeight = fontWeight
         self._dateRestriction = State(initialValue: dateRestriction)
         self._showCalendar = State(initialValue: false)
         self.action = action
@@ -61,7 +64,7 @@ public struct STDateField: View {
                     .padding(.leading, 5)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .foregroundStyle(shouldShownPlaceholder() ? .ST_595757: foregroundColor)
-                    .fontWeight(.bold)
+                    .fontWeight(self.fontWeight)
                     .customDynamicSize(font: .callout, ...DynamicTypeSize.accessibility1)
                 
                 Image(systemName: "calendar")

@@ -54,6 +54,8 @@ public struct STTextFieldList: View {
     var titleSpacing: CGFloat = 5
     var titleColor: Color = .ST_1B0851
     var isShowIcon: Bool = true
+    var textFontWeight: Font.Weight = .regular
+    var titleFontWeight: Font.Weight = .regular
     
     public init(isFocusedOn: FocusState<STTextFieldType?>.Binding,
                 textFields: [InputFieldType],
@@ -62,7 +64,10 @@ public struct STTextFieldList: View {
                 style: STFieldStyle = .normal,
                 spacing: CGFloat = 10,
                 titleSpacing: CGFloat = 5,
-                titleColor: Color = .ST_1B0851) {
+                titleColor: Color = .ST_1B0851,
+                textFontWeight: Font.Weight = .regular,
+                titleFontWeight: Font.Weight = .bold
+    ) {
         _isFocusedOn = isFocusedOn
         self.textFields = textFields
         self.foregroundColor = foregroundColor
@@ -71,6 +76,8 @@ public struct STTextFieldList: View {
         self.spacing = spacing
         self.titleSpacing = titleSpacing
         self.titleColor = titleColor
+        self.textFontWeight = textFontWeight
+        self.titleFontWeight = titleFontWeight
     }
     
     public var body: some View {
@@ -88,7 +95,8 @@ public struct STTextFieldList: View {
                             placeholder: textFieldType.placeholder,
                             isShowIcon: self.isShowIcon,
                             isFieldFocus: $isFocusedOn,
-                            fieldType: textFieldType)
+                            fieldType: textFieldType,
+                            fontWeight: self.textFontWeight)
                         .fieldSetting(keyboardType: textFieldType.keyboardType)
                         .id(textFieldType.title)
                         .onSubmit { submitAction(index: index) }
@@ -103,6 +111,7 @@ public struct STTextFieldList: View {
                             isShowIcon: self.isShowIcon,
                             foregroundColor: foregroundColor,
                             style: style,
+                            fontWeight: self.textFontWeight,
                             fieldType: textFieldType)
                         .fieldSetting(keyboardType: textFieldType.keyboardType)
                         .id(textFieldType.title)
@@ -119,6 +128,7 @@ public struct STTextFieldList: View {
                             selectedDate: binding,
                             foregroundColor: foregroundColor,
                             style: style,
+                            fontWeight: self.textFontWeight,
                             dateRestriction: restriction)
                         .padding(.bottom, 8)
                         .id(textFieldType.title)
@@ -130,9 +140,7 @@ public struct STTextFieldList: View {
     
     // MARK: Helper function -
     func fieldTitleMaker(_ input: STTextFieldType) -> some View {
-        
-        Text(input.title).titleConfig(textColor: titleColor)
-    
+        Text(input.title).titleConfig(fontWeight: titleFontWeight, textColor: titleColor)
     }
     
     // Switch focus to the next text field based on the current index

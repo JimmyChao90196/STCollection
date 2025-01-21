@@ -11,6 +11,7 @@ public struct STSecureField: View {
     @Binding var password: String
     var style: STFieldStyle = .normal
     let placeholder: String
+    var fontWeight: Font.Weight = .regular
     
     @State var isShowingPassword: Bool = false
     @State var isShowIcon: Bool = false
@@ -26,6 +27,7 @@ public struct STSecureField: View {
         isShowIcon: Bool = true,
         isFieldFocus: FocusState<STTextFieldType?>.Binding,
         fieldType: STTextFieldType,
+        fontWeight: Font.Weight = .regular,
         onChange: ((String) -> Void)? = nil
     ) {
         self._password = password
@@ -35,6 +37,7 @@ public struct STSecureField: View {
         self.isShowIcon = isShowIcon
         self._isFieldFocus = isFieldFocus
         self.fieldType = fieldType
+        self.fontWeight = fontWeight
         self.onChange = onChange
         }
     
