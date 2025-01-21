@@ -18,7 +18,7 @@ public enum InputFieldType: Hashable {
             return type
         }
     }
-    
+
     public func hash(into hasher: inout Hasher) {
         switch self {
         case .text(_, let type, _):
