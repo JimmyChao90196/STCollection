@@ -10,7 +10,7 @@ import SwiftUI
 
 //@available(*, deprecated, message: "The popup extension method will not be supported in the future update.", renamed: "stAlert")
 public extension View {
-    func popup<PopupView: View & Popable>(
+    func stPopup<PopupView: View & Popable>(
         content: PopupView,
         _ backgroundEnabel: Bool = true,
         _ materialEnabel: Bool = true,
