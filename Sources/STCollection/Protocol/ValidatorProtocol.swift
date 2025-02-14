@@ -9,6 +9,7 @@ import SwiftUI
 import Foundation
 
 // MARK: Protocol -
+@available(*, deprecated, message: "The validator protocol will not be supported in the future update.")
 public protocol Validator {
     var type: STTextFieldType? { get set }
     

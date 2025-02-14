@@ -16,6 +16,7 @@ public extension STTextFieldTypeProtocol {
     var keyboardType: UIKeyboardType { .default }
 }
 
+@available(*, deprecated, message: "The STTextFieldType will not be supported in the future update.")
 public struct STTextFieldType: STTextFieldTypeProtocol {
     private var titleKey: String
     private var placeholderKey: String
@@ -45,6 +46,7 @@ public struct STTextFieldType: STTextFieldTypeProtocol {
 }
 
 // Struct managing all text field types with static properties
+@available(*, deprecated, message: "The TextFieldTypeRegistry will not be supported in the future update.")
 public struct TextFieldTypeRegistry {
     public static let name = STTextFieldType(title: "姓名", placeholder: "請輸入您的姓名", keyboardType: .default)
     public static let birthday = STTextFieldType(title: "出生日期", placeholder: "請輸入您的出生日期", keyboardType: .default)

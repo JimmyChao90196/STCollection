@@ -44,6 +44,8 @@ public enum InputFieldType: Hashable {
     }
 }
 
+
+
 public struct STTextFieldList: View {
     
     @FocusState.Binding public var isFocusedOn: STTextFieldType?

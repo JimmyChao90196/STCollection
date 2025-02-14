@@ -1,5 +1,6 @@
 import SwiftUI
 
+@available(*, deprecated, message: "The STFlexFieldList protocol will not be supported in the future update.")
 public struct STFlexFieldList<ReturnedView: View>: View {
     
     @FocusState.Binding public var isFocusedOn: STTextFieldType?
