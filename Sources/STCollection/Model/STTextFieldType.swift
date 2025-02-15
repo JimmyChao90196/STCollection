@@ -16,7 +16,7 @@ public extension STTextFieldTypeProtocol {
     var keyboardType: UIKeyboardType { .default }
 }
 
-@available(*, deprecated, message: "The STTextFieldType will not be supported in the future update.")
+
 public struct STTextFieldType: STTextFieldTypeProtocol {
     private var titleKey: String
     private var placeholderKey: String
