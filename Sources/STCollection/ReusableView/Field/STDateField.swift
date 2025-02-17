@@ -17,6 +17,7 @@ public struct STDateField: View {
     
     let placeholder: String
     var foregroundColor: Color = Color.ST_595757
+    var backgroundColor: Color = Color(hex: "#FFF8E8")
     var style: STFieldStyle = .normal
     var fontWeight: Font.Weight = .regular
     
@@ -29,6 +30,7 @@ public struct STDateField: View {
         placeholder: String,
         selectedDate: Binding<Date>,
         foregroundColor: Color = Color.ST_595757,
+        backgroundColor: Color = Color(hex: "#FFF8E8"),
         style: STFieldStyle = .normal,
         fontWeight: Font.Weight = .regular,
         dateRestriction: DateRestriction = .none,
@@ -37,6 +39,7 @@ public struct STDateField: View {
         self.placeholder = placeholder
         self._selectedDate = selectedDate
         self.foregroundColor = foregroundColor
+        self.backgroundColor = backgroundColor
         self.style = style
         self.fontWeight = fontWeight
         self._dateRestriction = State(initialValue: dateRestriction)
@@ -87,7 +90,7 @@ public struct STDateField: View {
                 view
                     .padding(.horizontal, 10)
                     .padding(.vertical)
-                    .bubbleStyle(.ST_CBD8E8, 20)
+                    .bubbleStyle(backgroundColor, 20)
             })
             .onTapGesture {
                 showCalendar = true
