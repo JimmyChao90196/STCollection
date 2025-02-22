@@ -18,30 +18,32 @@ public extension STTextFieldTypeProtocol {
 
 
 public struct STTextFieldType: STTextFieldTypeProtocol {
-    private var titleKey: String
-    private var placeholderKey: String
+    private var dummyTitle: String = ""
+    private var title: LocalizedStringKey
+    private var placeholder: LocalizedStringKey
     public var icon: Image?
     public var keyboardType: UIKeyboardType
 
     // Computed properties to localize the title and placeholder using titleKey and placeholderKey
-    public var title: String {
-        NSLocalizedString(titleKey, comment: "")
-    }
-
-    public var placeholder: String {
-        NSLocalizedString(placeholderKey, comment: "")
-    }
+//    public var title: String {
+//        NSLocalizedString(titleKey, comment: "")
+//    }
+//
+//    public var placeholder: String {
+//        NSLocalizedString(placeholderKey, comment: "")
+//    }
     
     // Public initializer keeps the same parameter names as before
-    public init(title: String, placeholder: String, icon: Image? = nil, keyboardType: UIKeyboardType = .default) {
-        self.titleKey = title
-        self.placeholderKey = placeholder
+    public init(title: LocalizedStringKey, placeholder: LocalizedStringKey, icon: Image? = nil, keyboardType: UIKeyboardType = .default) {
+        self.dummyTitle = String(describing: title)
+        self.title = title
+        self.placeholder = placeholder
         self.icon = icon
         self.keyboardType = keyboardType
     }
     
     public func hash(into hasher: inout Hasher) {
-        hasher.combine(titleKey)
+        hasher.combine(dummyTitle)
     }
 }
 
