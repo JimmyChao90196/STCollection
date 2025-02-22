@@ -132,7 +132,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                         errorHandeling?(isEmpty, isValid, isStepValid)
                     }
                     .fieldSetting(keyboardType: .asciiCapable)
-                    .id(textFieldType.title)
+                    .id(textFieldType.dummyTitle)
                     .onSubmit {
                         
                         onSubmit?()
@@ -159,7 +159,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                         errorHandeling?(isEmpty, isValid, isStepValid)
                     }
                 .fieldSetting(keyboardType: textFieldType.keyboardType)
-                .id(textFieldType.title)
+                .id(textFieldType.dummyTitle)
                 .focused($isFocusedOn, equals: textFieldType)
                 .onSubmit {
                     onSubmit?()
@@ -177,7 +177,7 @@ public struct STFlexFieldList<ReturnedView: View>: View {
                     style: style,
                     dateRestriction: restriction)
                 
-                .id(textFieldType.title)
+                .id(textFieldType.dummyTitle)
                 .onTapGesture {}
             }
         }

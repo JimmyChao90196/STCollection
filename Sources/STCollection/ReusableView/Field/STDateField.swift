@@ -15,7 +15,7 @@ public enum DateRestriction {
 
 public struct STDateField: View {
     
-    let placeholder: String
+    let placeholder: LocalizedStringKey
     var foregroundColor: Color = Color.ST_595757
     var backgroundColor: Color = Color(hex: "#FFF8E8")
     var style: STFieldStyle = .normal
@@ -27,7 +27,7 @@ public struct STDateField: View {
     var action: (() -> Void)? = nil
     
     public init(
-        placeholder: String,
+        placeholder: LocalizedStringKey,
         selectedDate: Binding<Date>,
         foregroundColor: Color = Color.ST_595757,
         backgroundColor: Color = Color(hex: "#FFF8E8"),
@@ -53,8 +53,8 @@ public struct STDateField: View {
         return formatter
     }
     
-    var selectedDateInString: String {
-        formatter.string(from: selectedDate)
+    var selectedDateInString: LocalizedStringKey {
+        LocalizedStringKey(formatter.string(from: selectedDate))
     }
     
     public var body: some View {

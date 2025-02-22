@@ -4,8 +4,8 @@ import SwiftUI
 
 // Define your custom TextFieldType
 public protocol STTextFieldTypeProtocol: Hashable {
-    var title: String { get }
-    var placeholder: String { get }
+    var title: LocalizedStringKey { get }
+    var placeholder: LocalizedStringKey { get }
     var icon: Image? { get }
     var keyboardType: UIKeyboardType { get }
 }
@@ -18,9 +18,10 @@ public extension STTextFieldTypeProtocol {
 
 
 public struct STTextFieldType: STTextFieldTypeProtocol {
-    private var dummyTitle: String = ""
-    private var title: LocalizedStringKey
-    private var placeholder: LocalizedStringKey
+    
+    public var dummyTitle: String = ""
+    public var title: LocalizedStringKey
+    public var placeholder: LocalizedStringKey
     public var icon: Image?
     public var keyboardType: UIKeyboardType
 

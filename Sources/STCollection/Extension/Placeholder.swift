@@ -23,7 +23,7 @@ public extension View {
 
 public extension View {
     func placeholder(
-        _ text: String,
+        _ text: LocalizedStringKey,
         when shouldShow: Bool,
         alignment: Alignment = .leading,
         color: Color = .ST_595757,

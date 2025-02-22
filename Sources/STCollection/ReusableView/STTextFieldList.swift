@@ -22,11 +22,11 @@ public enum InputFieldType: Hashable {
     public func hash(into hasher: inout Hasher) {
         switch self {
         case .text(_, let type, _):
-            hasher.combine(type.title)
+            hasher.combine(type.dummyTitle)
         case .date(_, let type, _, _):
-            hasher.combine(type.title)
+            hasher.combine(type.dummyTitle)
         case .secure(_, let type, _):
-            hasher.combine(type.title)
+            hasher.combine(type.dummyTitle)
         }
     }
     
@@ -100,7 +100,7 @@ public struct STTextFieldList: View {
                             fieldType: textFieldType,
                             fontWeight: self.textFontWeight)
                         .fieldSetting(keyboardType: textFieldType.keyboardType)
-                        .id(textFieldType.title)
+                        .id(textFieldType.dummyTitle)
                         .onSubmit { submitAction(index: index) }
                     
                     case .text(let binding, let textFieldType, _):
@@ -116,7 +116,7 @@ public struct STTextFieldList: View {
                             fontWeight: self.textFontWeight,
                             fieldType: textFieldType)
                         .fieldSetting(keyboardType: textFieldType.keyboardType)
-                        .id(textFieldType.title)
+                        .id(textFieldType.dummyTitle)
                         .focused($isFocusedOn, equals: textFieldType)
                         .padding(.bottom, 8)
                         .onSubmit { submitAction(index: index) }
@@ -133,7 +133,7 @@ public struct STTextFieldList: View {
                             fontWeight: self.textFontWeight,
                             dateRestriction: restriction)
                         .padding(.bottom, 8)
-                        .id(textFieldType.title)
+                        .id(textFieldType.dummyTitle)
                     }
                 }
             }

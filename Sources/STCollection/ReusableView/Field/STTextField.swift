@@ -13,7 +13,7 @@ public struct STTextFeild: View {
     
     @Binding var inputData: String
     @State var isShowIcon: Bool = false
-    var placeholder: String
+    var placeholder: LocalizedStringKey
 
     var foregroundColor: Color = Color.ST_595757
     var style: STFieldStyle = .normal
@@ -23,7 +23,7 @@ public struct STTextFeild: View {
     
     public init(
             inputData: Binding<String>,
-            placeholder: String,
+            placeholder: LocalizedStringKey,
             isShowIcon: Bool = true,
             foregroundColor: Color = Color.ST_595757,
             style: STFieldStyle = .normal,

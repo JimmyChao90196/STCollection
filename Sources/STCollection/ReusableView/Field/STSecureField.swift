@@ -10,7 +10,7 @@ public struct STSecureField: View {
     
     @Binding var password: String
     var style: STFieldStyle = .normal
-    let placeholder: String
+    let placeholder: LocalizedStringKey
     var fontWeight: Font.Weight = .regular
     
     @State var isShowingPassword: Bool = false
@@ -22,7 +22,7 @@ public struct STSecureField: View {
     public init(
         password: Binding<String>,
         style: STFieldStyle = .normal,
-        placeholder: String,
+        placeholder: LocalizedStringKey,
         isShowingPassword: Bool = false,
         isShowIcon: Bool = true,
         isFieldFocus: FocusState<STTextFieldType?>.Binding,
