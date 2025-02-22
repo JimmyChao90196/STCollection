@@ -9,13 +9,13 @@ import Foundation
 import SwiftUI
 
 public struct TabTitle: TitleProtocol {
-    public var title: String
+    public var title: LocalizedStringKey
     public var id: UUID = UUID()
     public var selectedIcon: Image? = nil
     public var nonSelectedIcon: Image? = nil
     
     public init(
-        title: String,
+        title: LocalizedStringKey,
         id: UUID = UUID(),
         selectedIcon: Image? = nil,
         nonSelectedIcon: Image? = nil

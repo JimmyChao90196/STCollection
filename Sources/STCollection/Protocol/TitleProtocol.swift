@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 public protocol TitleProtocol: Identifiable {
-    var title: String { get }
+    var title: LocalizedStringKey { get }
     var id: UUID { get }
     var selectedIcon: Image? { get set }
     var nonSelectedIcon: Image? { get set }
