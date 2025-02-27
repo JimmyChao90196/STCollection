@@ -54,7 +54,7 @@ public struct STChecker: View {
                 }
             
             Text(text)
-                .customDynamicSize(font: .footnote, ...DynamicTypeSize.xxLarge)
+                //.customDynamicSize(font: .footnote, ...DynamicTypeSize.xxLarge)
         }
         .onTapGesture {
             isChecked.toggle()
