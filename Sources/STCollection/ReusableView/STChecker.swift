@@ -11,7 +11,7 @@ public struct STChecker: View {
     
     @Binding var isChecked: Bool
     
-    var text: String = "記住我的密碼"
+    var text: LocalizedStringKey = "記住我的密碼"
     var bgColor: Color = Color.clear
     var frameColor = Color.black
     var strokeWidth: CGFloat = 1
@@ -20,7 +20,7 @@ public struct STChecker: View {
     
     public init(
         isChecked: Binding<Bool>,
-        text: String = "記住我的密碼",
+        text: LocalizedStringKey = "記住我的密碼",
         bgColor: Color = .clear,
         frameColor: Color = .black,
         strokeWidth: CGFloat = 1,
