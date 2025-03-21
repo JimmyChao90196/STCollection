@@ -4,6 +4,7 @@ public enum STFieldStyle {
     case normal
     case block
     case original
+    case webField
 }
 
 public struct STSecureField: View {
