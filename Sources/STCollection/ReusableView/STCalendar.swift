@@ -12,6 +12,8 @@ public struct STCalendar: View {
     @Environment(\.dismiss) var dismiss
     
     @Binding var selectedDate: Date
+    @State var isShowSubmit: Bool = false
+    
     var dateRistriction: DateRestriction = .none
     
     public init(
@@ -39,18 +41,21 @@ public struct STCalendar: View {
                     .frame(width: 250)
                     .padding(.top, 15)
                 
-                Button {
-                    dismiss()
-                } label: {
-                    Text("提交")
-                        .customDynamicSize(font: .title3, ...DynamicTypeSize.xxLarge)
-                        .foregroundStyle(.white)
-                        .fontWeight(.bold)
-                        .padding(.vertical, 5)
-                        .padding(.horizontal)
-                        .bubbleStyle(.ST_1B0851, 4)
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.1)
+                if isShowSubmit {
+                    
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("提交")
+                            .customDynamicSize(font: .title3, ...DynamicTypeSize.xxLarge)
+                            .foregroundStyle(.white)
+                            .fontWeight(.bold)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal)
+                            .bubbleStyle(.ST_1B0851, 4)
+                            .lineLimit(1)
+                            .minimumScaleFactor(0.1)
+                    }
                 }
             }
             
@@ -81,6 +86,10 @@ public struct STCalendar: View {
         }
         .padding(.top, 20)
         .padding(20)
-
+        .onChange(of: selectedDate) { oldValue, newValue in
+            if oldValue != newValue {
+                isShowSubmit = true
+            }
+        }
     }
 }

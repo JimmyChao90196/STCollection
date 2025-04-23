@@ -3,6 +3,7 @@ import SwiftUI
 public enum STFieldStyle {
     case normal
     case block
+    case outlineBlock
     case original
     case webField
 }
