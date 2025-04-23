@@ -8,6 +8,7 @@ public enum STFieldStyle {
     case webField
 }
 
+
 public struct STSecureField: View {
     
     @Binding var password: String
