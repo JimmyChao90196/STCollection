@@ -58,6 +58,7 @@ public struct STExtendableList<InputData, Card: View, Header: View, Footer: View
                         .primListRowStyle()
                         .padding(.vertical, 10)
                         .padding(.horizontal, 2)
+                        .id(index)
                 }
                 
                 footerView
