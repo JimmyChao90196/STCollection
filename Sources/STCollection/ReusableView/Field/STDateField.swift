@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import Foundation
+import UIKit
 
 public enum DateRestriction {
     case disablePast
@@ -53,8 +55,13 @@ public struct STDateField: View {
         return formatter
     }
     
-    var selectedDateInString: LocalizedStringKey {
-        LocalizedStringKey(formatter.string(from: selectedDate))
+    var selectedDateInString: String {
+        
+        let target = formatter.string(from: selectedDate)
+        guard target.count > 4 else { return target }
+        let year = target.prefix(4)
+        return "\(year)/**/**"
+        
     }
     
     public var body: some View {
@@ -62,7 +69,13 @@ public struct STDateField: View {
         VStack {
             
             HStack {
-                Text(shouldShownPlaceholder() ? placeholder: selectedDateInString)
+                Group {
+                    if shouldShownPlaceholder() {
+                        Text(placeholder)
+                    } else {
+                        Text(selectedDateInString)
+                    }
+                }
                     .padding(5)
                     .padding(.leading, 5)
                     .frame(maxWidth: .infinity, alignment: .leading)
