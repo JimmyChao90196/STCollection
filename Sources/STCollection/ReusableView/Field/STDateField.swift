@@ -58,9 +58,10 @@ public struct STDateField: View {
     var selectedDateInString: String {
         
         let target = formatter.string(from: selectedDate)
-        guard target.count > 4 else { return target }
-        let year = target.prefix(4)
-        return "\(year)/**/**"
+        return target
+//        guard target.count > 4 else { return target }
+//        let year = target.prefix(4)
+//        return "\(year)/**/**"
         
     }
     
