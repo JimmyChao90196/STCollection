@@ -54,7 +54,7 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
         selectedIndex: Binding<Int>,
         previousIndex: Binding<Int>,
         inputDatas: [T],
-        animationStyle: Animation = .bouncy(duration: 0.5, extraBounce: 0.01),
+        animationStyle: Animation = .linear,
         innerPadding: CGFloat = 5,
         innerShadow: Bool = false,
         padding: CGFloat = 0,
@@ -96,10 +96,10 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
     
     public var body: some View {
         
-        VStack {
+        //VStack {
             HStack(alignment: .center ,spacing: 0) {
                 ForEach(inputDatas.indices, id: \.self) { index in
-                    ZStack {
+                    //ZStack {
                         
                         HStack(spacing: 5) {
                             
@@ -124,20 +124,22 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
                             // Tab title
                             Text(inputDatas[index].title)
                                 .customDynamicSize(font: font, dynamicSizeLock)
-                                .fontWeight(isSelected(index) ?
-                                            selectedFontWeight: nonSelectedFontWeight)
                                 .foregroundStyle(
                                     isSelected(index) ?
                                     selectedColor: nonSelectedColor)
+                                .fontWeight(isSelected(index) ?
+                                            selectedFontWeight: nonSelectedFontWeight)
+                                .animation(.none, value: selectedIndex)
                                 .lineLimit(1)
                                 .multilineTextAlignment(.center)
                                 .minimumScaleFactor(0.2)
                                 .padding(.horizontal, 5)
-                                .shadow(color: .gray, radius: 0.5, x: 0, y: 1)
                                 .frame(maxWidth: .infinity, alignment: .center)
                                 .onTapGesture {
-                                    previousIndex = selectedIndex
-                                    selectedIndex = index
+                                    withAnimation {
+                                        previousIndex = selectedIndex
+                                        selectedIndex = index
+                                    }
                                 }
                         }
                         .padding(.horizontal, 5)
@@ -152,11 +154,12 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
                                 }
                             }
                         )
+                        
                         .padding(innerPadding)
-                    }
+                    //}
                 }
             }
-            .animation(animationStyle, value: selectedIndex)
+//            .animation(animationStyle, value: selectedIndex)
             .if(innerShadow, then: { view in
                 view.innerShadow(nonSelectedBgColor, radius)
                     .overlay {
@@ -170,11 +173,12 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
                         RoundedRectangle(cornerRadius: radius).stroke(frameColor, lineWidth: frameWidth)
                     }
             })
-        }
+//        }
     }
     
     //MARK: - Helper function -
     private func isSelected(_ currentIndex: Int) -> Bool {
         selectedIndex == currentIndex
+    
     }
 }
