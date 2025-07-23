@@ -77,7 +77,7 @@ public struct STCalendar: View {
             }
             .labelsHidden()
             .datePickerStyle(.graphical)
-            .environment(\.calendar, Calendar(identifier: .republicOfChina))
+            //.environment(\.calendar, Calendar(identifier: .republicOfChina))
             .environment(\.locale, Locale(identifier: "zh_Hant_TW"))
             .tint(.black)
                 
