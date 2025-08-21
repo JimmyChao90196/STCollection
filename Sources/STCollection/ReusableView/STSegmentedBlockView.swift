@@ -148,7 +148,7 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
                                 selectedBgColor.clipShape(RoundedRectangle(cornerRadius: radius))
                                     .matchedGeometryEffect(id: "Tab", in: animation)
                             } else {
-                                nonSelectedBgColor
+                                Color.clear.contentShape(Rectangle())
                             }
                         }
                             .onTapGesture {
