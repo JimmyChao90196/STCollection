@@ -96,70 +96,71 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
     
     public var body: some View {
         
-        //VStack {
             HStack(alignment: .center ,spacing: 0) {
                 ForEach(inputDatas.indices, id: \.self) { index in
-                    //ZStack {
+                    
+                    HStack(spacing: 5) {
                         
-                        HStack(spacing: 5) {
+                        if inputDatas[index].selectedIcon != nil {
                             
-                            if inputDatas[index].selectedIcon != nil {
+                            if isSelected(index) {
+                                inputDatas[index].selectedIcon!
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: iconSize, height: iconSize)
+                                    .padding(.vertical, 5)
                                 
-                                if isSelected(index) {
-                                    inputDatas[index].selectedIcon!
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: iconSize, height: iconSize)
-                                        .padding(.vertical, 5)
-                                        
-                                } else {
-                                    inputDatas[index].nonSelectedIcon!
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(width: iconSize, height: iconSize)
-                                        .padding(.vertical, 5)
-                                }
+                            } else {
+                                inputDatas[index].nonSelectedIcon!
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: iconSize, height: iconSize)
+                                    .padding(.vertical, 5)
                             }
-                            
-                            // Tab title
-                            Text(inputDatas[index].title)
-                                .customDynamicSize(font: font, dynamicSizeLock)
-                                .foregroundStyle(
-                                    isSelected(index) ?
-                                    selectedColor: nonSelectedColor)
-                                .fontWeight(isSelected(index) ?
-                                            selectedFontWeight: nonSelectedFontWeight)
-                                .animation(.none, value: selectedIndex)
-                                .lineLimit(1)
-                                .multilineTextAlignment(.center)
-                                .minimumScaleFactor(0.2)
-                                .padding(.horizontal, 5)
-                                .frame(maxWidth: .infinity, alignment: .center)
-                                .onTapGesture {
-                                    withAnimation {
-                                        previousIndex = selectedIndex
-                                        selectedIndex = index
-                                    }
-                                }
                         }
-                        .padding(.horizontal, 5)
-                        .padding(.vertical, padding)
-                        .background(
-                            Group { // Use Group to ensure the view type is consistent
-                                if isSelected(index) {
-                                    selectedBgColor.clipShape(RoundedRectangle(cornerRadius: radius))
-                                        .matchedGeometryEffect(id: "Tab", in: animation)
-                                } else {
-                                    Color.clear
+                        
+                        // Tab title
+                        Text(inputDatas[index].title)
+                            .customDynamicSize(font: font, dynamicSizeLock)
+                            .foregroundStyle(
+                                isSelected(index) ?
+                                selectedColor: nonSelectedColor)
+                            .fontWeight(isSelected(index) ?
+                                        selectedFontWeight: nonSelectedFontWeight)
+                            .animation(.none, value: selectedIndex)
+                            .lineLimit(1)
+                            .multilineTextAlignment(.center)
+                            .minimumScaleFactor(0.2)
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, padding)
+                            .onTapGesture {
+                                withAnimation {
+                                    previousIndex = selectedIndex
+                                    selectedIndex = index
                                 }
                             }
-                        )
-                        
-                        .padding(innerPadding)
-                    //}
+                    }
+                    
+                    .background(
+                        Group { // Use Group to ensure the view type is consistent
+                            if isSelected(index) {
+                                selectedBgColor.clipShape(RoundedRectangle(cornerRadius: radius))
+                                    .matchedGeometryEffect(id: "Tab", in: animation)
+                            } else {
+                                nonSelectedBgColor
+                            }
+                        }
+                            .onTapGesture {
+                                withAnimation {
+                                    previousIndex = selectedIndex
+                                    selectedIndex = index
+                                }
+                            }
+                    )
+                    .padding(innerPadding)
                 }
             }
-//            .animation(animationStyle, value: selectedIndex)
             .if(innerShadow, then: { view in
                 view.innerShadow(nonSelectedBgColor, radius)
                     .overlay {
