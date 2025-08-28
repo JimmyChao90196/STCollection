@@ -118,7 +118,7 @@ public struct STDateField: View {
             STCalendar(
                 selectedDate: $selectedDate,
                 dateRistriction: dateRestriction)
-            .presentationDetents([.fraction(0.65)])    
+            .presentationDetents([.height(280)])
             .presentationDragIndicator(.visible)
         }
     }

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Foundation
 
 public struct STCalendar: View {
     
@@ -28,78 +29,88 @@ public struct STCalendar: View {
         Calendar.current.date(byAdding: .hour, value: 1, to: Date.now)!
     }
     
+    var formatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "西元yyyy年 MM月 dd日"
+        return formatter
+    }
+    
     public var body: some View {
         VStack {
             
             Spacer().frame(height: 20)
             
             HStack(alignment: .bottom) {
-                Text("請輸入出生年月日")
-                    .customDynamicSize(font: .title2, ...DynamicTypeSize.xxLarge)
-                    .fontWeight(.bold)
+                if isShowSubmit {
+    
+                    Text(formatter.string(from: selectedDate))
+                    .customDynamicSize(font: .title3, ...DynamicTypeSize.xxLarge)
+                    .fontWeight(.regular)
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .frame(width: 250)
                     .padding(.top, 15)
+                    
+                } else {
+                    Text("請輸入出生年月日")
+                        .customDynamicSize(font: .title2, ...DynamicTypeSize.xxLarge)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 15)
+                }
                 
                 if isShowSubmit {
                     
                     Button {
                         dismiss()
                     } label: {
-                        Text("提交")
-                            .customDynamicSize(font: .title3, ...DynamicTypeSize.xxLarge)
+                        Text("確認")
+                            .customDynamicSize(font: .headline, ...DynamicTypeSize.xxLarge)
                             .foregroundStyle(.white)
-                            .fontWeight(.bold)
                             .padding(.vertical, 5)
                             .padding(.horizontal)
-                            .bubbleStyle(.ST_1B0851, 4)
-                            .lineLimit(1)
-                            .minimumScaleFactor(0.1)
+                            .bubbleStyle(.init(hex: "#C7846E"), 4)
                     }
                 }
             }
+            .padding(.horizontal)
             
             Group {
                 switch dateRistriction {
                 case .custom(let start, let end):
                     DatePicker("Title", selection: $selectedDate, in: start...end, displayedComponents: .date)
+                        .frame(maxWidth: .infinity)
                         .datePickerStyle(.wheel)
                         .dynamicTypeSize(...DynamicTypeSize.xLarge)
                         
                     
                 case .disablePast:
                     DatePicker("Title", selection: $selectedDate, in: adjacentNow..., displayedComponents: .date)
+                        .frame(maxWidth: .infinity)
                         .datePickerStyle(.wheel)
                         .dynamicTypeSize(...DynamicTypeSize.xLarge)
                         
                         
                 case .disableFuture:
                     DatePicker("Title", selection: $selectedDate, in: ...Date(), displayedComponents: .date)
+                        .frame(maxWidth: .infinity)
                         .datePickerStyle(.wheel)
                         .dynamicTypeSize(...DynamicTypeSize.xLarge)
                         
                         
                 case .none:
                     DatePicker("Title", selection: $selectedDate, displayedComponents: .date)
+                        .frame(maxWidth: .infinity)
                         .datePickerStyle(.wheel)
                         .dynamicTypeSize(...DynamicTypeSize.xLarge)
                 }
             }
             .labelsHidden()
-            .datePickerStyle(.graphical)
-            //.environment(\.calendar, Calendar(identifier: .republicOfChina))
             .environment(\.locale, Locale(identifier: "zh_Hant_TW"))
             .tint(.black)
-                
-            
-            Spacer()
         }
         .padding(.top, 20)
-        .padding(20)
         .onChange(of: selectedDate) { oldValue, newValue in
             if oldValue != newValue {
                 isShowSubmit = true
-                
             }
         }
     }
