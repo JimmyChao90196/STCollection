@@ -99,6 +99,7 @@ public struct STCalendar: View {
         .onChange(of: selectedDate) { oldValue, newValue in
             if oldValue != newValue {
                 isShowSubmit = true
+                
             }
         }
     }
