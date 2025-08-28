@@ -61,18 +61,28 @@ public struct STCalendar: View {
             
             Group {
                 switch dateRistriction {
+                case .custom(let start, let end):
+                    DatePicker("Title", selection: $selectedDate, in: start...end, displayedComponents: .date)
+                        .datePickerStyle(.wheel)
+                        .dynamicTypeSize(...DynamicTypeSize.xLarge)
+                        
+                    
                 case .disablePast:
                     DatePicker("Title", selection: $selectedDate, in: adjacentNow..., displayedComponents: .date)
+                        .datePickerStyle(.wheel)
                         .dynamicTypeSize(...DynamicTypeSize.xLarge)
+                        
                         
                 case .disableFuture:
                     DatePicker("Title", selection: $selectedDate, in: ...Date(), displayedComponents: .date)
+                        .datePickerStyle(.wheel)
                         .dynamicTypeSize(...DynamicTypeSize.xLarge)
+                        
                         
                 case .none:
                     DatePicker("Title", selection: $selectedDate, displayedComponents: .date)
+                        .datePickerStyle(.wheel)
                         .dynamicTypeSize(...DynamicTypeSize.xLarge)
-                    
                 }
             }
             .labelsHidden()

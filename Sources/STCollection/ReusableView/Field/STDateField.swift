@@ -12,6 +12,7 @@ import UIKit
 public enum DateRestriction {
     case disablePast
     case disableFuture
+    case custom(start: Date, end: Date)
     case none
 }
 
@@ -125,6 +126,9 @@ public struct STDateField: View {
     // Should shown placeholder
     func shouldShownPlaceholder() -> Bool {
         switch dateRestriction {
+        case .custom(let start, let end):
+            return selectedDate.isBefore(start) || selectedDate.isAfter(end)
+            
         case .disableFuture:
             return selectedDate.isAfter(Calendar.current.date(
                 byAdding: .day,
