@@ -15,24 +15,42 @@ public struct STCalendar: View {
     @Binding var selectedDate: Date
     @State var isShowSubmit: Bool = false
     
+    var formatString: String
+    var placeholder: LocalizedStringResource
+    
     var dateRistriction: DateRestriction = .none
     
     public init(
             selectedDate: Binding<Date>,
-            dateRistriction: DateRestriction = .none
+            dateRistriction: DateRestriction = .none,
+            formatString: String = "西元yyyy年 MM月 dd日",
+            placeholder: LocalizedStringResource = "請輸入出生年月日"
         ) {
             self._selectedDate = selectedDate
             self.dateRistriction = dateRistriction
+            self.formatString = formatString
+            self.placeholder = placeholder
         }
     
     var adjacentNow: Date {
         Calendar.current.date(byAdding: .hour, value: 1, to: Date.now)!
     }
     
-    var formatter: DateFormatter {
+//    var formatter: DateFormatter {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "西元yyyy年 MM月 dd日"
+//        return formatter
+//    }
+    
+    func formatted(_ date: Date, formatString: String = "西元yyyy年 MM月 dd日") -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "西元yyyy年 MM月 dd日"
-        return formatter
+        
+        formatter.calendar = Calendar(identifier: .gregorian)
+        formatter.timeZone = TimeZone(identifier: "Asia/Taipei")
+        formatter.locale = .current
+        
+        formatter.dateFormat = formatString
+        return formatter.string(from: date)
     }
     
     public var body: some View {
@@ -43,14 +61,14 @@ public struct STCalendar: View {
             HStack(alignment: .bottom) {
                 if isShowSubmit {
     
-                    Text(formatter.string(from: selectedDate))
+                    Text(formatted(selectedDate, formatString: formatString))
                     .customDynamicSize(font: .title3, ...DynamicTypeSize.xxLarge)
                     .fontWeight(.regular)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.top, 15)
                     
                 } else {
-                    Text("請輸入出生年月日")
+                    Text(placeholder)
                         .customDynamicSize(font: .title2, ...DynamicTypeSize.xxLarge)
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .center)
@@ -62,7 +80,7 @@ public struct STCalendar: View {
                     Button {
                         dismiss()
                     } label: {
-                        Text("確認")
+                        Text("dialog_confirm")
                             .customDynamicSize(font: .headline, ...DynamicTypeSize.xxLarge)
                             .foregroundStyle(.white)
                             .padding(.vertical, 5)
