@@ -122,6 +122,7 @@ public struct STSegmentedBlockView<T: TitleProtocol>: View {
                         // Tab title
                         Text(inputDatas[index].title)
                             .customDynamicSize(font: font, dynamicSizeLock)
+                            .accessibilityHint("點兩下可切換至此類別")
                             .foregroundStyle(
                                 isSelected(index) ?
                                 selectedColor: nonSelectedColor)
